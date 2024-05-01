@@ -1,0 +1,44 @@
+.DetailedArtwork {
+  display: flex;
+  gap: 1rem;
+  background-color: white;
+  color: black;
+  padding: 2rem;
+}
+
+aside {
+  width: auto;
+}
+
+aside img {
+  width: 100%;
+}
+
+.Details {
+  display: flex;
+  flex-direction: column;
+  min-width: 50%;
+}
+
+.Details p {
+  margin: 0;
+  padding: 0;
+}
+
+.Details h3 {
+  margin-top: 0;
+}
+
+.Pair :nth-child(1) {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
