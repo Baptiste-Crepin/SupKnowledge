@@ -1,5 +1,6 @@
 import axios from "axios";
 import config from "../../config.json";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./Artwork.css";
 
@@ -88,6 +89,7 @@ export type ArtworkType = {
 };
 
 function Artwork({ id }: { id: number }) {
+	const navigate = useNavigate();
 	const [artwork, setArtwork] = useState<ArtworkType | null>(null);
 
 	useEffect(() => {
@@ -105,11 +107,11 @@ function Artwork({ id }: { id: number }) {
 		<div
 			className="Artwork"
 			onClick={() => {
-				console.log("Clicked");
+				navigate(`/artwork/${id}`);
 			}}
 			onKeyUp={(event) => {
 				if (event.key === "Enter") {
-					console.log("Key up");
+					navigate(`/artwork/${id}`);
 				}
 			}}
 			role="button"
@@ -124,7 +126,9 @@ function Artwork({ id }: { id: number }) {
 						src={
 							artwork.primaryImageSmall
 								? artwork.primaryImageSmall
-								: "../assets/notFound.svg"
+								: artwork.primaryImage
+								  ? artwork.primaryImage
+								  : "../../public/notFound.svg"
 						}
 						alt="Artwork"
 					/>

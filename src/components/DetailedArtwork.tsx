@@ -1,7 +1,26 @@
-import { ArtworkType } from "./Artwork";
+import { useParams } from "react-router-dom";
 import "./DetailedArtwork.css";
+import { ArtworkType } from "./Artwork";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import config from "../../config.json";
 
-function DetailedArtwork({ artwork }: { artwork: ArtworkType | null }) {
+function DetailedArtwork() {
+	const artworkId = useParams().id;
+	const [artwork, setArtwork] = useState<ArtworkType | null>(null);
+
+	useEffect(() => {
+		axios
+			.get(`${config.API_URL}/public/collection/v1/objects/${artworkId}`)
+			.then((response) => {
+				setArtwork(response.data as ArtworkType);
+				console.log(response.data);
+			})
+			.catch((error) => {
+				console.error("Error fetching detailed artwork:", error);
+			});
+	}, [artworkId]);
+
 	return (
 		<div className="DetailedArtwork">
 			{artwork === null ? (
@@ -100,7 +119,9 @@ function DetailedArtwork({ artwork }: { artwork: ArtworkType | null }) {
 							src={
 								artwork.primaryImageSmall
 									? artwork.primaryImageSmall
-									: "../assets/notFound.svg"
+									: artwork.primaryImage
+									  ? artwork.primaryImage
+									  : "../../public/notFound.svg"
 							}
 							alt="Artwork"
 						/>

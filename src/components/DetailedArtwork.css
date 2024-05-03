@@ -4,6 +4,7 @@
   background-color: white;
   color: black;
   padding: 2rem;
+  justify-content: space-between;
 }
 
 aside {
