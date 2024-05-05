@@ -40,3 +40,24 @@
   /* aspect-ratio: 1/1; */
 
 }
+
+/* .Artwork-tags {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: auto;
+
+} */
+
+.Artwork-tags {
+  display: flex;
+  gap: 10px;
+  /* Adjust the gap between badges */
+  margin-top: auto;
+  /* Push badges to the bottom */
+}
+
+.card {
+  /* Other card styles */
+  display: flex;
+  flex-direction: column;
+}

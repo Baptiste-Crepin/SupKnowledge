@@ -6,6 +6,7 @@ import "./Artwork.css";
 import { toast } from "react-toastify";
 import { MdImageNotSupported } from "react-icons/md";
 import Card from "react-bootstrap/Card";
+import Badge from "react-bootstrap/Badge";
 
 import LoaderComponent from "./Shared/Loader";
 
@@ -128,7 +129,6 @@ function Artwork({ id }: { id: number }) {
 								{artwork.title ||
 									`${artwork.objectName} - ${artwork.artistDisplayName}`}
 							</Card.Title>
-							{/* <Card.Text>{artwork.</Card.Text> */}
 							<Card.Text>
 								{artwork.artistDisplayName} {artwork.artistBeginDate} - //{" "}
 								{artwork.artistEndDate}
@@ -136,7 +136,15 @@ function Artwork({ id }: { id: number }) {
 							<Card.Text>
 								{artwork.medium}- {artwork.objectDate}
 							</Card.Text>
-							{/* <Button variant="primary">More informations</Button> */}
+							{artwork.tags && artwork.tags.length > 0 && (
+								<Card.Text className="Artwork-tags">
+									{artwork.tags.map((tag) => (
+										<Badge key={tag.term} bg="primary" className="Artwork-tag">
+											{tag.term}
+										</Badge>
+									))}
+								</Card.Text>
+							)}
 						</Card.Body>
 						{artwork.primaryImageSmall || artwork.primaryImage ? (
 							<Card.Img
@@ -148,7 +156,7 @@ function Artwork({ id }: { id: number }) {
 						) : (
 							<Card.Img
 								className="Artwork-image"
-								variant="top"
+								variant="bottom"
 								as={MdImageNotSupported}
 							/>
 						)}

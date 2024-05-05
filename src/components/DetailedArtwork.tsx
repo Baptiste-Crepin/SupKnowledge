@@ -3,11 +3,12 @@ import "./DetailedArtwork.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import config from "../../config.json";
-import { ArtworkType } from "./Artwork";
 import LoaderComponent from "./Shared/Loader";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { MdImageNotSupported } from "react-icons/md";
+import Carousel from "react-bootstrap/Carousel";
+import { ArtworkType } from "./Artwork";
 
 function DetailedArtwork() {
 	const navigate = useNavigate();
@@ -134,13 +135,25 @@ function DetailedArtwork() {
 						)}
 
 						{artwork.additionalImages.length === 0 ? null : (
-							<ul>
+							// <ul>
+							// 	{artwork.additionalImages.map((additionalImage) => (
+							// 		<li key={additionalImage}>
+							// 			<img src={additionalImage} alt="Artwork" />
+							// 		</li>
+							// 	))}
+							// </ul>
+
+							<Carousel>
 								{artwork.additionalImages.map((additionalImage) => (
-									<li key={additionalImage}>
-										<img src={additionalImage} alt="Artwork" />
-									</li>
+									<Carousel.Item key={additionalImage}>
+										<img
+											className="d-block w-100"
+											src={additionalImage}
+											alt="Artwork"
+										/>
+									</Carousel.Item>
 								))}
-							</ul>
+							</Carousel>
 						)}
 					</aside>
 				</>
