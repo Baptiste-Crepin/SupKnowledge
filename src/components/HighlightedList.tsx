@@ -5,6 +5,7 @@ import Artwork from "./Artwork";
 import LoaderComponent from "./Shared/Loader";
 import { toast } from "react-toastify";
 // import { useLocation } from "react-router-dom";
+import "./HighlightedList.css";
 
 function HighlightedList() {
 	// const location = useLocation();
@@ -17,14 +18,14 @@ function HighlightedList() {
 	useEffect(() => {
 		axios
 			.get(
-				`${config.API_URL}/public/collection/v1/search?isHighlight=true&hasImages=true&q=sunflowers`,
+				`${config.API_URL}/public/collection/v1/search?isHighlight=true&hasImages=true&q=%22%22`,
 			)
 			.then((response) => {
 				setArtworkIds(response.data.objectIDs);
 				setTotal(response.data.total);
 				console.log(response.data.total, response.data.objectIDs);
 			})
-			.catch((error) => {
+			.catch(() => {
 				toast.error("Error while fetching highlighted", {
 					toastId: "ErrorFetchingHighlighted",
 				});
@@ -32,29 +33,25 @@ function HighlightedList() {
 	}, []);
 
 	return (
-		<>
+		<div style={{ padding: "2rem" }}>
 			<h2>Highlighted items</h2>
 			{artworkIds.length === 0 ? (
 				<LoaderComponent />
 			) : (
 				<>
-					<div className="aa">
-						{artworkIds.slice(page * 10 - 10, page * 10).map((id: number) => {
+					<div className="Highlighted-list">
+						{artworkIds.slice(page * 9 - 9, page * 9).map((id: number) => {
 							return <Artwork key={id} id={id} />;
 						})}
-
-						{/* {artworkIds.map((id: number) => (
-							<Artwork key={id} id={id} />
-						))} */}
 					</div>
-					{total > page * 10 && (
+					{total > page * 9 && (
 						<button type="button" onClick={() => setPage(page + 1)}>
 							Next {page}
 						</button>
 					)}
 				</>
 			)}
-		</>
+		</div>
 	);
 }
 

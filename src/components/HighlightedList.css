@@ -1,0 +1,9 @@
+.Highlighted-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+h2 {
+  margin-bottom: 1rrem !important;
+}

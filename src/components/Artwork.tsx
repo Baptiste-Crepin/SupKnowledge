@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import "./Artwork.css";
 import { toast } from "react-toastify";
 import { MdImageNotSupported } from "react-icons/md";
+import Card from "react-bootstrap/Card";
 
 import LoaderComponent from "./Shared/Loader";
 
@@ -102,7 +103,7 @@ function Artwork({ id }: { id: number }) {
 			.then((response) => {
 				setArtwork(response.data as ArtworkType);
 			})
-			.catch((error) => {
+			.catch(() => {
 				toast.error("Error while fetching highlighted artworks", {
 					toastId: "ErrorFetchingArtwork",
 				});
@@ -110,48 +111,94 @@ function Artwork({ id }: { id: number }) {
 	}, [id]);
 
 	return (
-		<div
-			className="Artwork"
-			onClick={() => {
-				navigate(`/artwork/${id}`);
-			}}
-			onKeyUp={(event) => {
-				if (event.key === "Enter") {
+		<>
+			<Card
+				onClick={() => {
 					navigate(`/artwork/${id}`);
-				}
-			}}
-			role="button"
-			tabIndex={0}
-		>
-			{artwork === null ? (
-				<LoaderComponent />
-			) : (
-				<div>
-					<h3>{artwork.title}</h3>
-					<p>
-						{artwork.objectID} | {artwork.isPublicDomain.toString()}
-					</p>
-					<p>{artwork.isHighlight.toString()}</p>
-					{artwork.primaryImageSmall || artwork.primaryImage ? (
-						<img
-							src={artwork.primaryImageSmall || artwork.primaryImage}
-							alt={artwork.title}
-						/>
-					) : (
-						<MdImageNotSupported />
-					)}
-					<div>
-						<p>
-							{artwork.artistDisplayName} {artwork.artistBeginDate} -{" "}
-							{artwork.artistEndDate}
-						</p>
-						<p>
-							{artwork.medium}- {artwork.objectDate}
-						</p>
-					</div>
-				</div>
-			)}
-		</div>
+				}}
+			>
+				{artwork === null ? (
+					<Card.Body>
+						<LoaderComponent />
+					</Card.Body>
+				) : (
+					<>
+						<Card.Body>
+							<Card.Title>
+								{artwork.title ||
+									`${artwork.objectName} - ${artwork.artistDisplayName}`}
+							</Card.Title>
+							{/* <Card.Text>{artwork.</Card.Text> */}
+							<Card.Text>
+								{artwork.artistDisplayName} {artwork.artistBeginDate} - //{" "}
+								{artwork.artistEndDate}
+							</Card.Text>
+							<Card.Text>
+								{artwork.medium}- {artwork.objectDate}
+							</Card.Text>
+							{/* <Button variant="primary">More informations</Button> */}
+						</Card.Body>
+						{artwork.primaryImageSmall || artwork.primaryImage ? (
+							<Card.Img
+								className="Artwork-image"
+								variant="bottom"
+								loading="lazy"
+								src={artwork.primaryImageSmall || artwork.primaryImage}
+							/>
+						) : (
+							<Card.Img
+								className="Artwork-image"
+								variant="top"
+								as={MdImageNotSupported}
+							/>
+						)}
+					</>
+				)}
+			</Card>
+		</>
+
+		// <div
+		// 	className="Artwork"
+		// 	onClick={() => {
+		// 		navigate(`/artwork/${id}`);
+		// 	}}
+		// 	onKeyUp={(event) => {
+		// 		if (event.key === "Enter") {
+		// 			navigate(`/artwork/${id}`);
+		// 		}
+		// 	}}
+		// 	role="button"
+		// 	tabIndex={0}
+		// >
+		// 	{artwork === null ? (
+		// 		<LoaderComponent />
+		// 	) : (
+		// 		<div>
+		// 			<h3>{artwork.title}</h3>
+		// 			<p>
+		// 				{artwork.objectID} | {artwork.isPublicDomain.toString()}
+		// 			</p>
+		// 			<p>{artwork.isHighlight.toString()}</p>
+		// 			{artwork.primaryImageSmall || artwork.primaryImage ? (
+		// 				<img
+		// 					src={artwork.primaryImageSmall || artwork.primaryImage}
+		// 					alt={artwork.title}
+		// 				/>
+		// 			) : (
+		// 				<MdImageNotSupported />
+		// 			)}
+		// 			<div>
+		// 				<p>
+		// 					{artwork.artistDisplayName} {artwork.artistBeginDate} -{" "}
+		// 					{artwork.artistEndDate}
+		// 				</p>
+		// 				<p>
+		// 					{artwork.medium}- {artwork.objectDate}
+		// 				</p>
+		// 			</div>
+		// 		</div>
+		// 	)}
+		// </div>
 	);
 }
 

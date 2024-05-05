@@ -4,11 +4,19 @@ import { IoSearch } from "react-icons/io5";
 import { useEffect, useRef } from "react";
 
 function HeaderComponent() {
-	const headerRef = useRef(null);
+	const headerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		const headerHeight = headerRef.current.clientHeight;
-		document.querySelector(".Spacer").style.height = `${headerHeight}px`;
+		const headerElement = headerRef.current;
+		if (headerElement) {
+			const headerHeight = headerElement.clientHeight;
+			const spacerElement = document.querySelector(
+				".Spacer",
+			) as HTMLElement | null;
+			if (spacerElement) {
+				spacerElement.style.height = `${headerHeight}px`;
+			}
+		}
 	}, []);
 
 	return (
@@ -18,8 +26,8 @@ function HeaderComponent() {
 					<h1>SupKnowledge</h1>
 				</Link>
 
-				<div>
-					<div className="Header-Link">
+				<div className="Header-actions">
+					<div className="Header-link">
 						<Link to="/">Home</Link>
 					</div>
 					<span>

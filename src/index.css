@@ -1,3 +1,13 @@
+:root {
+  --color-primary: #f9f9f9;
+  --color-secondary: #646cff;
+  --color-tertiary: #1a1a1a;
+  --color-text: #242424;
+  --color-background: #ffffff;
+  --color-white: #ffffff;
+  --color-black: #000000;
+}
+
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -76,9 +86,15 @@ button:focus-visible {
   padding: 2rem;
   width: 100%;
   height: 100%;
-} */
+}
+*/
 
 img {
   max-width: 100%;
   height: auto;
+}
+
+* {
+  font-family: "Lora", serif;
+  box-sizing: border-box;
 }

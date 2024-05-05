@@ -21,7 +21,7 @@ function DetailedArtwork() {
 				setArtwork(response.data as ArtworkType);
 				console.log(response.data);
 			})
-			.catch((error) => {
+			.catch(() => {
 				toast.error("Error while fetching artwork", {
 					toastId: "ErrorFetchingArtwork",
 				});
@@ -127,6 +127,7 @@ function DetailedArtwork() {
 							<img
 								src={artwork.primaryImageSmall || artwork.primaryImage}
 								alt={artwork.title}
+								loading="lazy"
 							/>
 						) : (
 							<MdImageNotSupported />

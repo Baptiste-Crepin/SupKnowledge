@@ -10,24 +10,30 @@
   z-index: 100;
 }
 
-.Header-Link a {
-  color: #666666;
-  text-decoration: none;
+.Header-actions {
+  display: flex;
+  gap: 2.5rem;
 }
 
 a {
   text-decoration: none !important;
-  color: #666666 !important;
+  color: var(--color-text) !important;
 }
 
 h1 {
   margin: 0 !important;
-  color: black !important;
+  color: var(--color-text) !important;
+}
+
+span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
 }
 
 .Spacer {
   display: flex;
   flex-grow: 1;
   height: 0;
-  /* background-color: red; */
 }

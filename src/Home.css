@@ -30,8 +30,7 @@
 }
 
 .Image-cover-content h2 {
-  color: white;
+  color: var(--color-white);
   margin: 0;
   font-size: 5rem;
-  font-family: "Lora", serif;
 }
