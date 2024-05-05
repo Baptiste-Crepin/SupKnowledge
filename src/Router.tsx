@@ -1,16 +1,21 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import HighlightedList from "./components/HighlightedList";
-import DetailedArtwork from "./components/DetailedArtwork";
+import DetailedArtwork from "./Components/DetailedArtwork";
+import HomeComponent from "./Home";
+import { ToastContainer } from "react-toastify";
+import HeaderComponent from "./Components/Shared/Header/Header";
 
-function Router() {
+function RouterComponent() {
 	return (
 		<BrowserRouter>
+			<HeaderComponent />
+			<ToastContainer theme="colored" position="bottom-left" />
 			<Routes>
-				<Route path="/" element={<HighlightedList />} />
+				<Route path="/" element={<HomeComponent />} />
 				<Route path="/artwork/:id" element={<DetailedArtwork />} />
+				<Route path="*" element={<h1>Not Found</h1>} />
 			</Routes>
 		</BrowserRouter>
 	);
 }
 
-export default Router;
+export default RouterComponent;

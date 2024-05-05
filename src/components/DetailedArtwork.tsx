@@ -1,11 +1,16 @@
 import { useParams } from "react-router-dom";
 import "./DetailedArtwork.css";
-import { ArtworkType } from "./Artwork";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import config from "../../config.json";
+import { ArtworkType } from "./Artwork";
+import LoaderComponent from "./Shared/Loader";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { MdImageNotSupported } from "react-icons/md";
 
 function DetailedArtwork() {
+	const navigate = useNavigate();
 	const artworkId = useParams().id;
 	const [artwork, setArtwork] = useState<ArtworkType | null>(null);
 
@@ -17,14 +22,17 @@ function DetailedArtwork() {
 				console.log(response.data);
 			})
 			.catch((error) => {
-				console.error("Error fetching detailed artwork:", error);
+				toast.error("Error while fetching artwork", {
+					toastId: "ErrorFetchingArtwork",
+				});
+				navigate("/");
 			});
-	}, [artworkId]);
+	}, [artworkId, navigate]);
 
 	return (
 		<div className="DetailedArtwork">
 			{artwork === null ? (
-				<p>Loading...</p>
+				<LoaderComponent />
 			) : (
 				<>
 					<div className="Details">
@@ -115,16 +123,14 @@ function DetailedArtwork() {
 						) : null}
 					</div>
 					<aside>
-						<img
-							src={
-								artwork.primaryImageSmall
-									? artwork.primaryImageSmall
-									: artwork.primaryImage
-									  ? artwork.primaryImage
-									  : "../../public/notFound.svg"
-							}
-							alt="Artwork"
-						/>
+						{artwork.primaryImageSmall || artwork.primaryImage ? (
+							<img
+								src={artwork.primaryImageSmall || artwork.primaryImage}
+								alt={artwork.title}
+							/>
+						) : (
+							<MdImageNotSupported />
+						)}
 
 						{artwork.additionalImages.length === 0 ? null : (
 							<ul>

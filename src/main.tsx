@@ -1,7 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import Router from "./Router";
+import RouterComponent from "./Router";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "react-toastify/dist/ReactToastify.css";
 
 const root = document.getElementById("root");
 if (root === null) {
@@ -10,6 +12,6 @@ if (root === null) {
 
 ReactDOM.createRoot(root).render(
 	<React.StrictMode>
-		<Router />
+		<RouterComponent />
 	</React.StrictMode>,
 );

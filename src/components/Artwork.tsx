@@ -3,6 +3,10 @@ import config from "../../config.json";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./Artwork.css";
+import { toast } from "react-toastify";
+import { MdImageNotSupported } from "react-icons/md";
+
+import LoaderComponent from "./Shared/Loader";
 
 export type MeasurementType = {
 	elementName: string;
@@ -99,7 +103,9 @@ function Artwork({ id }: { id: number }) {
 				setArtwork(response.data as ArtworkType);
 			})
 			.catch((error) => {
-				console.error("Error fetching highlighted:", error);
+				toast.error("Error while fetching highlighted artworks", {
+					toastId: "ErrorFetchingArtwork",
+				});
 			});
 	}, [id]);
 
@@ -118,20 +124,22 @@ function Artwork({ id }: { id: number }) {
 			tabIndex={0}
 		>
 			{artwork === null ? (
-				<p>Loading...</p>
+				<LoaderComponent />
 			) : (
 				<div>
 					<h3>{artwork.title}</h3>
-					<img
-						src={
-							artwork.primaryImageSmall
-								? artwork.primaryImageSmall
-								: artwork.primaryImage
-								  ? artwork.primaryImage
-								  : "../../public/notFound.svg"
-						}
-						alt="Artwork"
-					/>
+					<p>
+						{artwork.objectID} | {artwork.isPublicDomain.toString()}
+					</p>
+					<p>{artwork.isHighlight.toString()}</p>
+					{artwork.primaryImageSmall || artwork.primaryImage ? (
+						<img
+							src={artwork.primaryImageSmall || artwork.primaryImage}
+							alt={artwork.title}
+						/>
+					) : (
+						<MdImageNotSupported />
+					)}
 					<div>
 						<p>
 							{artwork.artistDisplayName} {artwork.artistBeginDate} -{" "}

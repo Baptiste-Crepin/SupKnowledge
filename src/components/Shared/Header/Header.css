@@ -1,0 +1,33 @@
+.Header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  box-shadow: 0px 0px 15px rgba(102, 102, 102, 1);
+  position: fixed;
+  width: 100%;
+  background-color: #ffffff;
+  z-index: 100;
+}
+
+.Header-Link a {
+  color: #666666;
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none !important;
+  color: #666666 !important;
+}
+
+h1 {
+  margin: 0 !important;
+  color: black !important;
+}
+
+.Spacer {
+  display: flex;
+  flex-grow: 1;
+  height: 0;
+  /* background-color: red; */
+}
