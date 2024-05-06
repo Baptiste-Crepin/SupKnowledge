@@ -1,19 +1,37 @@
 import axios from "axios";
 import config from "../../config.json";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Artwork from "./Artwork";
 import LoaderComponent from "./Shared/Loader";
 import { toast } from "react-toastify";
-// import { useLocation } from "react-router-dom";
 import "./HighlightedList.css";
+import PaginationComponent from "./Shared/PaginationComponent/PaginationComponent";
+import { useNavigate } from "react-router-dom";
 
 function HighlightedList() {
-	// const location = useLocation();
-	// const searchParams = new URLSearchParams(location.search);
-	// const [page, setPage] = useState(parseInt(searchParams.get("page") ?? "1"));
+	const navigate = useNavigate();
+	const searchParams = new URLSearchParams(location.search);
+	const [page, setPage] = useState<number>(parseInt(searchParams.get("page") ?? "1"));
 	const [artworkIds, setArtworkIds] = useState([]);
-	const [page, setPage] = useState(1);
 	const [total, setTotal] = useState(0);
+	const artworksPerPages = 9;
+	const headerRef = useRef<HTMLDivElement>(null);
+
+	const setPageAndNavigate = (newPage: number) => {
+		setPage(newPage);
+		searchParams.set("page", newPage.toString());
+		navigate({ search: searchParams.toString() });
+
+		// Scroll to the top of the highlighted section
+		const offset = 100;
+		const highlightedElement = document.getElementById("highlighted");
+		const HeaderHeight = headerRef.current ? headerRef.current.clientHeight : 0;
+		if (highlightedElement) {
+  	const targetPosition = highlightedElement.getBoundingClientRect().top + window.pageYOffset - HeaderHeight - offset;
+
+		window.scrollTo({top: targetPosition});
+		}
+	};
 
 	useEffect(() => {
 		axios
@@ -32,23 +50,33 @@ function HighlightedList() {
 			});
 	}, []);
 
+	useEffect(() => {
+		setPage(parseInt(searchParams.get("page") || "1"));
+	}, [searchParams]);
+
 	return (
 		<div style={{ padding: "2rem" }}>
-			<h2>Highlighted items</h2>
+			<h2 id="highlighted">Highlighted items</h2>
 			{artworkIds.length === 0 ? (
 				<LoaderComponent />
 			) : (
 				<>
 					<div className="Highlighted-list">
-						{artworkIds.slice(page * 9 - 9, page * 9).map((id: number) => {
-							return <Artwork key={id} id={id} />;
-						})}
+						{artworkIds
+							.slice(
+								page * artworksPerPages - artworksPerPages,
+								page * artworksPerPages,
+							)
+							.map((id: number) => {
+								return <Artwork key={id} id={id} />;
+							})}
 					</div>
-					{total > page * 9 && (
-						<button type="button" onClick={() => setPage(page + 1)}>
-							Next {page}
-						</button>
-					)}
+					<PaginationComponent
+						page={page}
+						setPage={setPageAndNavigate}
+						totalElements={total}
+						elementsPerPage={artworksPerPages}
+					/>
 				</>
 			)}
 		</div>

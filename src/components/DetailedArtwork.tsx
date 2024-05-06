@@ -135,21 +135,13 @@ function DetailedArtwork() {
 						)}
 
 						{artwork.additionalImages.length === 0 ? null : (
-							// <ul>
-							// 	{artwork.additionalImages.map((additionalImage) => (
-							// 		<li key={additionalImage}>
-							// 			<img src={additionalImage} alt="Artwork" />
-							// 		</li>
-							// 	))}
-							// </ul>
-
-							<Carousel>
+							<Carousel fade>
 								{artwork.additionalImages.map((additionalImage) => (
 									<Carousel.Item key={additionalImage}>
 										<img
 											className="d-block w-100"
 											src={additionalImage}
-											alt="Artwork"
+											alt="Artwork additional"
 										/>
 									</Carousel.Item>
 								))}

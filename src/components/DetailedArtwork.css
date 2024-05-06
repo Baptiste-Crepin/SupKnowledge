@@ -12,7 +12,13 @@ aside {
 }
 
 aside img {
-  width: 100%;
+  height: 35vh;
+  width: auto;
+}
+
+.carousel-item img {
+  height: 35vh;
+  width: auto;
 }
 
 .Details {
