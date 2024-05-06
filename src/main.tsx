@@ -7,11 +7,11 @@ import "react-toastify/dist/ReactToastify.css";
 
 const root = document.getElementById("root");
 if (root === null) {
-	throw new Error("Element with id 'root' not found");
+  throw new Error("Element with id 'root' not found");
 }
 
 ReactDOM.createRoot(root).render(
-	<React.StrictMode>
-		<RouterComponent />
-	</React.StrictMode>,
+  <React.StrictMode>
+    <RouterComponent />
+  </React.StrictMode>
 );
