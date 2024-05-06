@@ -10,10 +10,6 @@
   color: var(--color-text);
 }
 
-.Artwork:focus {
-  outline: red auto 1rem;
-}
-
 .Artwork img {
   border-radius: 0.5rem;
   max-height: 40vh;
@@ -33,31 +29,23 @@
 }
 
 .Artwork-image {
-  width: 100%;
-  object-fit: cover;
-  min-height: 25vh;
-  max-height: 60vh;
-  /* aspect-ratio: 1/1; */
-
+  object-fit: contain;
+  height: 40vh;
+  width: auto;
 }
 
-/* .Artwork-tags {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: auto;
+path {
+  color: #666666;
+}
 
-} */
 
 .Artwork-tags {
   display: flex;
   gap: 10px;
-  /* Adjust the gap between badges */
   margin-top: auto;
-  /* Push badges to the bottom */
 }
 
 .card {
-  /* Other card styles */
   display: flex;
   flex-direction: column;
 }
