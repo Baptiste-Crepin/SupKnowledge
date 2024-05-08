@@ -1,0 +1,7 @@
+.SearchBar {
+  background-color: red;
+  position: fixed;
+  z-index: 100;
+  width: 100%;
+  padding: 2rem 1rem;
+}

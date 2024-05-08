@@ -1,6 +1,5 @@
 import { Pagination } from "react-bootstrap";
 import "./PaginationComponent.css";
-import { useState } from "react";
 
 type PaginationComponentProps = {
   page: number;
@@ -17,8 +16,6 @@ function PaginationComponent({
   elementsPerPage,
   totalElements,
 }: PaginationComponentProps) {
-  const [inputedPage, setInputedPage] = useState<number>(page);
-
   return (
     <Pagination>
       {page > 1 ? (

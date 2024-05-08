@@ -94,7 +94,13 @@ export type ArtworkType = {
   GalleryNumber: string;
 };
 
-function Artwork({ id }: { id: number }) {
+type ArtworkProps = {
+  id: number;
+  size?: "xs" | "sm" | "md" | "lg";
+  handleImagelessArtwork?: (artwork: ArtworkType) => void;
+};
+
+function Artwork({ id, size, handleImagelessArtwork }: ArtworkProps) {
   const navigate = useNavigate();
   const [artwork, setArtwork] = useState<ArtworkType | null>(null);
 
@@ -103,6 +109,13 @@ function Artwork({ id }: { id: number }) {
       .get(`${config.API_URL}/public/collection/v1/objects/${id}`)
       .then((response) => {
         setArtwork(response.data as ArtworkType);
+        if (
+          handleImagelessArtwork !== undefined &&
+          response.data.primaryImage === ""
+        ) {
+          console.log(response.data);
+          handleImagelessArtwork(response.data as ArtworkType);
+        }
       })
       .catch(() => {
         toast.error("Error while fetching highlighted artworks", {
@@ -114,6 +127,7 @@ function Artwork({ id }: { id: number }) {
   return (
     <>
       <Card
+        className={`Artwork-${size}`}
         onClick={() => {
           navigate(`/artwork/${id}`);
         }}>
@@ -163,49 +177,6 @@ function Artwork({ id }: { id: number }) {
         )}
       </Card>
     </>
-
-    // <div
-    // 	className="Artwork"
-    // 	onClick={() => {
-    // 		navigate(`/artwork/${id}`);
-    // 	}}
-    // 	onKeyUp={(event) => {
-    // 		if (event.key === "Enter") {
-    // 			navigate(`/artwork/${id}`);
-    // 		}
-    // 	}}
-    // 	role="button"
-    // 	tabIndex={0}
-    // >
-    // 	{artwork === null ? (
-    // 		<LoaderComponent />
-    // 	) : (
-    // 		<div>
-    // 			<h3>{artwork.title}</h3>
-    // 			<p>
-    // 				{artwork.objectID} | {artwork.isPublicDomain.toString()}
-    // 			</p>
-    // 			<p>{artwork.isHighlight.toString()}</p>
-    // 			{artwork.primaryImageSmall || artwork.primaryImage ? (
-    // 				<img
-    // 					src={artwork.primaryImageSmall || artwork.primaryImage}
-    // 					alt={artwork.title}
-    // 				/>
-    // 			) : (
-    // 				<MdImageNotSupported />
-    // 			)}
-    // 			<div>
-    // 				<p>
-    // 					{artwork.artistDisplayName} {artwork.artistBeginDate} -{" "}
-    // 					{artwork.artistEndDate}
-    // 				</p>
-    // 				<p>
-    // 					{artwork.medium}- {artwork.objectDate}
-    // 				</p>
-    // 			</div>
-    // 		</div>
-    // 	)}
-    // </div>
   );
 }
 

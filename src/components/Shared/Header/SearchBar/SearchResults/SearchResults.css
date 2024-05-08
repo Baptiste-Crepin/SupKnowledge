@@ -1,0 +1,7 @@
+.search-results {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  overflow: auto;
+  max-height: 40vh;
+}

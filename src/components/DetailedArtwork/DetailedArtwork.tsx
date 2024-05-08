@@ -133,7 +133,15 @@ function DetailedArtwork() {
               <MdImageNotSupported />
             )}
 
-            {artwork.additionalImages.length === 0 ? null : (
+            {artwork.additionalImages.length <= 1 ? (
+              artwork.additionalImages.length === 1 && (
+                <img
+                  className="d-block w-100"
+                  src={artwork.additionalImages[0]}
+                  alt="Artwork additional"
+                />
+              )
+            ) : (
               <Carousel fade>
                 {artwork.additionalImages.map((additionalImage) => (
                   <Carousel.Item key={additionalImage}>
