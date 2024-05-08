@@ -25,7 +25,7 @@ h1 {
   color: var(--color-text) !important;
 }
 
-span {
+span .icon-text {
   display: flex;
   align-items: center;
   justify-content: center;

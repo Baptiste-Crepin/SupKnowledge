@@ -6,33 +6,10 @@ import "./Artwork.css";
 import { toast } from "react-toastify";
 import { MdImageNotSupported } from "react-icons/md";
 import Card from "react-bootstrap/Card";
-import Badge from "react-bootstrap/Badge";
-
 import LoaderComponent from "../Shared/Loader/Loader";
-
-export type MeasurementType = {
-  elementName: string;
-  elementDescription: string;
-  elementMeasurements: {
-    Depth?: number;
-    Height: number;
-    Width: number;
-  };
-};
-export type ConstituentType = {
-  constituentID: number;
-  role: string;
-  name: string;
-  constituentULAN_URL: string;
-  constituentWikidata_URL: string;
-  gender: string;
-};
-
-export type TagType = {
-  term: string;
-  AAT_URL: string;
-  Wikidata_URL: string;
-};
+import TagsList, { TagType } from "../Shared/TagList/TagList";
+import { MeasurementType } from "../Shared/MeasurementList/MesurementList";
+import { ConstituentType } from "../Shared/ConstituentList/ConstituentList";
 
 export type ArtworkType = {
   objectID: number;
@@ -149,15 +126,7 @@ function Artwork({ id, size, handleImagelessArtwork }: ArtworkProps) {
               <Card.Text>
                 {artwork.medium}- {artwork.objectDate}
               </Card.Text>
-              {artwork.tags && artwork.tags.length > 0 && (
-                <Card.Text className="Artwork-tags">
-                  {artwork.tags.map((tag) => (
-                    <Badge key={tag.term} bg="primary" className="Artwork-tag">
-                      {tag.term}
-                    </Badge>
-                  ))}
-                </Card.Text>
-              )}
+              <TagsList tags={artwork.tags} />
             </Card.Body>
             {artwork.primaryImageSmall || artwork.primaryImage ? (
               <Card.Img

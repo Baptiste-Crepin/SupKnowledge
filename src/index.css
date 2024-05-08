@@ -11,12 +11,21 @@
   --color-warning: #ffff00;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-}
 
 * {
   font-family: "Lora", serif, sans-serif;
   box-sizing: border-box;
+}
+
+
+.Pair {
+  display: flex;
+  align-items: center;
+  gap: .2rem;
+}
+
+.Pair p:nth-child(1) {
+  margin-right: .3rem;
+  font-size: 1.1rem;
+  font-weight: 600;
 }

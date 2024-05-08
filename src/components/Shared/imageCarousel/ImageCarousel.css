@@ -1,0 +1,27 @@
+.image-carousel {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.primary-image {
+  height: 60vh;
+  object-fit: contain;
+  place-self: center;
+}
+
+.additional-images {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.additional-image {
+  height: 10vh;
+  object-fit: contain;
+  place-self: center;
+}

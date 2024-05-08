@@ -10,7 +10,7 @@
   color: var(--color-text);
 }
 
-*/ .Artwork img {
+.Artwork img {
   border-radius: 0.5rem;
   max-height: 40vh;
 }

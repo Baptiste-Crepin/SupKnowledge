@@ -40,7 +40,9 @@ function HeaderComponent() {
           <div className="Header-link">
             <Link to="/">Home</Link>
           </div>
-          <span onClick={() => setIsOpened((prev) => !prev)}>
+          <span
+            className="icon-text"
+            onClick={() => setIsOpened((prev) => !prev)}>
             <IoSearch />
             Search
           </span>

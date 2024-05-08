@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import "./SearchResultArtwork.css";
 import { toast } from "react-toastify";
 import { MdImageNotSupported } from "react-icons/md";
-import Card from "react-bootstrap/Card";
-import Badge from "react-bootstrap/Badge";
+import { Card } from "react-bootstrap";
 import LoaderComponent from "../../../../Loader/Loader";
 import config from "../../../../../../../config.json";
 import { ArtworkType } from "../../../../../Artwork/Artwork";
+import TagsList from "../../../../TagList/TagList";
 
 type ArtworkProps = {
   id: number;
@@ -91,15 +91,9 @@ function SearchResultArtwork({ id, handleImagelessArtwork }: ArtworkProps) {
               <Card.Text>
                 {artwork.medium} - {artwork.objectDate}
               </Card.Text>
-              {artwork.tags && artwork.tags.length > 0 && (
-                <Card.Text className="Artwork-tags">
-                  {artwork.tags.map((tag) => (
-                    <Badge key={tag.term} bg="primary" className="Artwork-tag">
-                      {tag.term}
-                    </Badge>
-                  ))}
-                </Card.Text>
-              )}
+              <Card.Text>
+                <TagsList tags={artwork.tags} card />
+              </Card.Text>
             </Card.Body>
           </>
         )}

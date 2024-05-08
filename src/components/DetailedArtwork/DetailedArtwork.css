@@ -1,5 +1,5 @@
 .DetailedArtwork {
-  display: flex;
+  /* display: flex; */
   gap: 1rem;
   background-color: var(--color-white);
   padding: 2rem;
@@ -8,17 +8,12 @@
 }
 
 aside {
-  width: auto;
-}
-
-aside img {
-  height: 35vh;
-  width: auto;
-}
-
-.carousel-item img {
-  height: 35vh;
-  width: auto;
+  width: 25vw;
+  gap: 1rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  flex-direction: column;
 }
 
 .Details {
@@ -34,11 +29,6 @@ aside img {
 
 .Details h3 {
   margin-top: 0;
-}
-
-.Pair :nth-child(1) {
-  font-size: 1.2rem;
-  font-weight: bold;
 }
 
 ul {

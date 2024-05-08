@@ -6,9 +6,19 @@ import config from "../../../config.json";
 import LoaderComponent from "../Shared/Loader/Loader";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { MdImageNotSupported } from "react-icons/md";
-import Carousel from "react-bootstrap/Carousel";
 import { ArtworkType } from "../Artwork/Artwork";
+import { Button } from "react-bootstrap";
+import TagsList from "../Shared/TagList/TagList";
+import MeasurementList from "../Shared/MeasurementList/MesurementList";
+import ConstituentList from "../Shared/ConstituentList/ConstituentList";
+import ArtistInformationComponent from "../Shared/ArtistInformations/ArtistInformations";
+import {
+  displayUnknown,
+  displayUnknownBoolean,
+  displayUnknownDates,
+} from "../../Helpers/DisplayUnknown";
+import RecomendedArtworks from "../Shared/RecomendedArtworks/RecomendedArtworks";
+import ImageCarousel from "../Shared/imageCarousel/imageCarousel";
 
 function DetailedArtwork() {
   const navigate = useNavigate();
@@ -20,6 +30,7 @@ function DetailedArtwork() {
       .get(`${config.API_URL}/public/collection/v1/objects/${artworkId}`)
       .then((response) => {
         setArtwork(response.data as ArtworkType);
+        console.log(response.data);
       })
       .catch(() => {
         toast.error("Error while fetching artwork", {
@@ -36,125 +47,50 @@ function DetailedArtwork() {
       ) : (
         <>
           <div className="Details">
-            <h3>{artwork.title}</h3>
-            <div className="Artist">
-              {artwork.artistDisplayName ? (
-                <div className="Pair">
-                  <p>Artist:</p>
-                  <p>{artwork.artistDisplayName}</p>
-                </div>
-              ) : null}
-              {artwork.artistBeginDate ? (
-                <div className="Pair">
-                  <p>Date of birth:</p>
-                  <p>{artwork.artistBeginDate}</p>
-                </div>
-              ) : null}
-              {artwork.artistEndDate ? (
-                <div className="Pair">
-                  <p>Date of death:</p>
-                  <p>{artwork.artistEndDate}</p>
-                </div>
-              ) : null}
+            <h2>{artwork.title}</h2>
+            <TagsList tags={artwork.tags} />
+
+            <ImageCarousel artwork={artwork} />
+
+            <h3>Artwork Informations:</h3>
+            {displayUnknown("Object Name", artwork.objectName, false)}
+
+            {artwork.objectBeginDate !== artwork.objectEndDate
+              ? displayUnknownDates(
+                  artwork.objectBeginDate,
+                  artwork.objectEndDate
+                )
+              : displayUnknown("Object date", artwork.objectDate, false)}
+            {displayUnknown("Medium", artwork.medium, false)}
+            {displayUnknown("Culture", artwork.culture, false)}
+            {displayUnknown("Period", artwork.period, false)}
+            {displayUnknown("Repository", artwork.repository, false)}
+            {displayUnknown("Classification", artwork.classification, false)}
+            {displayUnknown("Gallery number", artwork.GalleryNumber, false)}
+            {displayUnknownBoolean("Public domain", artwork.isPublicDomain)}
+            {displayUnknownBoolean("Highlight", artwork.isHighlight)}
+            {displayUnknownBoolean("Timeline work", artwork.isTimelineWork)}
+
+            <ArtistInformationComponent artwork={artwork} />
+            <ConstituentList constituents={artwork.constituents} />
+            <MeasurementList
+              dimensions={artwork.dimensions}
+              measurements={artwork.measurements}
+            />
+            <div className="Pair">
+              <p>Links:</p>
+              <Button variant="primary" href={artwork.objectWikidata_URL}>
+                Wikidata
+              </Button>
+              <Button variant="primary " href={artwork.objectURL}>
+                metmuseum
+              </Button>
             </div>
-            {artwork.objectName ? (
-              <div className="Pair">
-                <p>Object name:</p>
-                <p>{artwork.objectName}</p>
-              </div>
-            ) : null}
-
-            {artwork.objectBeginDate && artwork.objectEndDate ? (
-              artwork.objectBeginDate !== artwork.objectEndDate ? (
-                <div className="Pair">
-                  <p>Date:</p>
-                  <p>
-                    {artwork.objectBeginDate} - {artwork.objectEndDate}
-                  </p>
-                </div>
-              ) : (
-                <div className="Pair">
-                  <p>Date:</p>
-                  <p>{artwork.objectDate}</p>
-                </div>
-              )
-            ) : null}
-            {artwork.medium ? (
-              <div className="Pair">
-                <p>Medium:</p>
-                <p>{artwork.medium}</p>
-              </div>
-            ) : null}
-            {artwork.culture ? (
-              <div className="Pair">
-                <p>Culture:</p>
-                <p>{artwork.culture}</p>
-              </div>
-            ) : null}
-            {artwork.period ? (
-              <div className="Pair">
-                <p>Period:</p>
-                <p>{artwork.period}</p>
-              </div>
-            ) : null}
-            {artwork.dimensions ? (
-              <div className="Pair">
-                <p>Dimentions:</p>
-                <p>{artwork.dimensions}</p>
-              </div>
-            ) : null}
-            {artwork.repository ? (
-              <div className="Pair">
-                <p>Repository:</p>
-                <p>{artwork.repository}</p>
-              </div>
-            ) : null}
-            {artwork.classification ? (
-              <div className="Pair">
-                <p>Classification:</p>
-                <p>{artwork.classification}</p>
-              </div>
-            ) : null}
-            {artwork.GalleryNumber ? (
-              <div className="Pair">
-                <p>GaleryNumber:</p>
-                <p>{artwork.GalleryNumber}</p>
-              </div>
-            ) : null}
+            {artwork && artwork.tags && artwork.tags.length > 0 && (
+              <RecomendedArtworks tags={artwork.tags} />
+            )}
           </div>
-          <aside>
-            {artwork.primaryImageSmall || artwork.primaryImage ? (
-              <img
-                src={artwork.primaryImageSmall || artwork.primaryImage}
-                alt={artwork.title}
-                loading="lazy"
-              />
-            ) : (
-              <MdImageNotSupported />
-            )}
-
-            {artwork.additionalImages.length <= 1 ? (
-              artwork.additionalImages.length === 1 && (
-                <img
-                  className="d-block w-100"
-                  src={artwork.additionalImages[0]}
-                  alt="Artwork additional"
-                />
-              )
-            ) : (
-              <Carousel fade>
-                {artwork.additionalImages.map((additionalImage) => (
-                  <Carousel.Item key={additionalImage}>
-                    <img
-                      className="d-block w-100"
-                      src={additionalImage}
-                      alt="Artwork additional"
-                    />
-                  </Carousel.Item>
-                ))}
-              </Carousel>
-            )}
-          </aside>
+          {/* <ImageCarousel artwork={artwork} /> */}
         </>
       )}
     </div>

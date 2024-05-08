@@ -66,7 +66,7 @@ function HighlightedList() {
         <LoaderComponent />
       ) : (
         <>
-          <div className="Highlighted-list">
+          <div className="card-list">
             {artworkIds
               .slice(
                 page * artworksPerPages - artworksPerPages,
