@@ -80,8 +80,9 @@ type ArtworkProps = {
 function Artwork({ id, size, handleImagelessArtwork }: ArtworkProps) {
   const navigate = useNavigate();
   const [artwork, setArtwork] = useState<ArtworkType | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  useEffect(() => {
+  const fetchArtwork = (id: number, firstIteration: boolean = true) => {
     axios
       .get(`${config.API_URL}/public/collection/v1/objects/${id}`)
       .then((response) => {
@@ -90,15 +91,25 @@ function Artwork({ id, size, handleImagelessArtwork }: ArtworkProps) {
           handleImagelessArtwork !== undefined &&
           response.data.primaryImage === ""
         ) {
-          console.log(response.data);
           handleImagelessArtwork(response.data as ArtworkType);
         }
       })
       .catch(() => {
-        toast.error("Error while fetching highlighted artworks", {
-          toastId: "ErrorFetchingArtwork",
-        });
+        if (firstIteration) {
+          toast.error("Error while fetching highlighted artworks", {
+            toastId: "ErrorFetchingArtwork",
+          });
+          setTimeout(() => {
+            fetchArtwork(id, false);
+          }, 5000);
+        } else {
+          setErrorMessage("Could not load the artwork.");
+        }
       });
+  };
+
+  useEffect(() => {
+    fetchArtwork(id);
   }, [id]);
 
   return (
@@ -110,7 +121,11 @@ function Artwork({ id, size, handleImagelessArtwork }: ArtworkProps) {
         }}>
         {artwork === null ? (
           <Card.Body>
-            <LoaderComponent />
+            {errorMessage ? (
+              <h5 className="error">{errorMessage}</h5>
+            ) : (
+              <LoaderComponent />
+            )}
           </Card.Body>
         ) : (
           <>

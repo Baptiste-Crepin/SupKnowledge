@@ -1,42 +1,31 @@
-.DetailedArtwork {
-  /* display: flex; */
-  gap: 1rem;
-  background-color: var(--color-white);
+.title {
+  font-size: 2.5rem;
+  font-weight: bolder;
+  margin: 0;
+}
+
+.detailed-artwork {
   padding: 2rem;
-  justify-content: space-between;
+  background-color: var(--color-white);
+  margin: 2rem;
   color: var(--color-text);
 }
 
-aside {
-  width: 25vw;
-  gap: 1rem;
-  display: flex;
-  justify-content: flex-start;
-  align-items: baseline;
-  flex-direction: column;
-}
-
-.Details {
-  display: flex;
-  flex-direction: column;
-  min-width: 50%;
-}
-
-.Details p {
+.details-container p {
   margin: 0;
   padding: 0;
 }
 
-.Details h3 {
-  margin-top: 0;
+.details-container>div {
+  padding: 1rem 0;
+  margin: 0;
 }
 
-ul {
-  margin: 0 !important;
-  padding: 0 !important;
+.main-informations {
+  display: flex;
+  justify-content: space-between;
 }
 
-li {
-  list-style: none;
-  margin-top: 1rem;
+.btn {
+  margin: .5rem 0;
 }

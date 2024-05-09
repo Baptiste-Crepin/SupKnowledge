@@ -1,5 +1,6 @@
+import { Button } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
-import { Link } from "react-router-dom";
+import "./ConstituentList.css";
 
 export type ConstituentType = {
   constituentID: number;
@@ -15,7 +16,7 @@ type ConstituentListProps = {
 
 function ConstituentList({ constituents }: ConstituentListProps) {
   return (
-    <>
+    <div className="constituent-list">
       {constituents && constituents.length > 0 && (
         <div className="Constituents">
           <h4>Constituents</h4>
@@ -34,12 +35,17 @@ function ConstituentList({ constituents }: ConstituentListProps) {
                   <td>{constituent.name}</td>
                   <td>{constituent.role}</td>
                   <td>{constituent.gender || "Unknown"}</td>
-                  <td>
-                    <Link to={constituent.constituentULAN_URL}> Ulan</Link> |
-                    <Link to={constituent.constituentWikidata_URL}>
-                      {" "}
+                  <td className="link-list">
+                    <Button
+                      variant="primary"
+                      href={constituent.constituentULAN_URL}>
+                      Ulan
+                    </Button>
+                    <Button
+                      variant="primary"
+                      href={constituent.constituentWikidata_URL}>
                       Wikidia
-                    </Link>
+                    </Button>
                   </td>
                 </tr>
               ))}
@@ -47,7 +53,7 @@ function ConstituentList({ constituents }: ConstituentListProps) {
           </Table>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

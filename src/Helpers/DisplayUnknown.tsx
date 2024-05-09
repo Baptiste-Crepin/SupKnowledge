@@ -1,6 +1,7 @@
 import { capitalize } from "./Capitalise";
 import { ImCross } from "react-icons/im";
 import { FaCheck } from "react-icons/fa";
+import { formatTimestamp } from "./FormatTimestamp";
 // import "./DisplayUnknown.css";
 
 export function displayUnknownProperty(
@@ -13,13 +14,14 @@ export function displayUnknownProperty(
 export function displayUnknown(
   label: string,
   value: string | number | undefined | null,
-  displayIfEmpty: boolean = true,
+  displayIfEmpty: boolean = false,
   placeholder: string = "Unknown"
 ): JSX.Element {
   const valueString = value ? value.toString() : "";
   return (
     <>
-      {displayIfEmpty ? (
+      {displayUnknownProperty(valueString, placeholder) !== placeholder ||
+      displayIfEmpty ? (
         <span className="Pair">
           <p>{capitalize(label)}:</p>
           <p>{displayUnknownProperty(valueString, placeholder)}</p>
@@ -57,12 +59,19 @@ export function displayUnknownDates(
   placeholder: string = "Unknown"
 ): JSX.Element {
   return (
-    <span className="Pair">
-      <p>Dates:</p>
-      {displayUnknownProperty(beginDate.toString(), placeholder)}
-      <p> - </p>
-      {displayUnknownProperty(endDate.toString(), placeholder)}
-    </span>
+    <>
+      {displayUnknownProperty(beginDate.toString(), placeholder) !==
+        placeholder &&
+      displayUnknownProperty(endDate.toString(), placeholder) !==
+        placeholder ? (
+        <span className="Pair">
+          <p>Dates:</p>
+          {displayUnknownProperty(beginDate.toString(), placeholder)}
+          <p> - </p>
+          {displayUnknownProperty(endDate.toString(), placeholder)}
+        </span>
+      ) : null}
+    </>
   );
 }
 
@@ -86,6 +95,19 @@ export function displayUnknownBoolean(
           <ImCross fill="red" />
         </>
       )}
+    </span>
+  );
+}
+
+export function displayUnknownTimestamp(
+  label: string,
+  timestamp: string,
+  placeholder: string = "Unknown"
+): JSX.Element {
+  return (
+    <span className="Pair">
+      <p>{capitalize(label)}:</p>
+      <p>{timestamp ? formatTimestamp(timestamp) : placeholder}</p>
     </span>
   );
 }

@@ -1,5 +1,4 @@
 import Table from "react-bootstrap/Table";
-import { displayUnknown } from "../../../Helpers/DisplayUnknown";
 
 export type MeasurementType = {
   elementName: string;
@@ -12,17 +11,15 @@ export type MeasurementType = {
 };
 
 type MeasurementListProps = {
-  dimensions: string;
   measurements: MeasurementType[];
 };
 
-function MeasurementList({ dimensions, measurements }: MeasurementListProps) {
+function MeasurementList({ measurements }: MeasurementListProps) {
   return (
-    <>
+    <div className="measurement-list">
       {measurements && measurements.length > 0 && (
         <div className="Measurements">
           <h4>Measurements</h4>
-          <p>{displayUnknown("Dimensions", dimensions)}</p>
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -47,7 +44,7 @@ function MeasurementList({ dimensions, measurements }: MeasurementListProps) {
           </Table>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

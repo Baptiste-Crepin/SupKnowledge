@@ -4,13 +4,14 @@ import { toast } from "react-toastify";
 import config from "../../../../../../config.json";
 import "./SearchResults.css";
 import SearchResultArtwork from "./SearchResultArtwork/SearchResultArtwork";
+import { Button } from "react-bootstrap";
 
 type SearchResultsProps = {
   querry: string;
   datasPerSearch?: number;
 };
 
-function SearchResults({ querry, datasPerSearch = 5 }: SearchResultsProps) {
+function SearchResults({ querry, datasPerSearch = 6 }: SearchResultsProps) {
   const [artworkIds, setArtworkIds] = useState<number[]>([]);
   const [total, setTotal] = useState(0);
   const [displayedArtworkAmount, setDisplayedArtworksAmount] =
@@ -27,7 +28,6 @@ function SearchResults({ querry, datasPerSearch = 5 }: SearchResultsProps) {
       .get(`${config.API_URL}/public/collection/v1/search?q=${querry}`)
       .then((response) => {
         if (response.data.objectIDs === null) {
-          console.log("No results found", querry);
           setArtworkIds([]);
           setTotal(0);
           return;
@@ -35,8 +35,7 @@ function SearchResults({ querry, datasPerSearch = 5 }: SearchResultsProps) {
         setTotal(response.data.total);
         setArtworkIds(response.data.objectIDs);
       })
-      .catch((error) => {
-        console.error("Error:", error);
+      .catch(() => {
         toast.error("Error while fetching search results", {
           toastId: "ErrorFetchingSearchResults",
         });
@@ -57,15 +56,16 @@ function SearchResults({ querry, datasPerSearch = 5 }: SearchResultsProps) {
             {artworkIds.slice(0, displayedArtworkAmount).map((id) => (
               <SearchResultArtwork key={id} id={id} />
             ))}
-            {displayedArtworkAmount >= total ? (
-              <p>No more artworks to show</p>
-            ) : (
-              <button
-                onClick={() =>
-                  setDisplayedArtworksAmount(displayedArtworkAmount + 5)
-                }>
-                See more {displayedArtworkAmount}
-              </button>
+            {displayedArtworkAmount >= total ? null : (
+              <>
+                <p></p>
+                <Button
+                  onClick={() =>
+                    setDisplayedArtworksAmount(displayedArtworkAmount + 6)
+                  }>
+                  See more {displayedArtworkAmount} / {total}
+                </Button>
+              </>
             )}
           </div>
         </>

@@ -1,5 +1,6 @@
 .SearchBar {
-  background-color: red;
+  background-color: var(--color-primary);
+  color: var(--color-white);
   position: fixed;
   z-index: 100;
   width: 100%;

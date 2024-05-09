@@ -1,9 +1,9 @@
 :root {
-  --color-primary: #f9f9f9;
+  --color-primary: #BF8763;
   --color-secondary: #646cff;
+  --color-background: #F0E2DA;
   --color-tertiary: #1a1a1a;
   --color-text: #242424;
-  --color-background: #ffffff;
   --color-white: #ffffff;
   --color-black: #000000;
   --color-error: #ff0000;
@@ -11,6 +11,9 @@
   --color-warning: #ffff00;
 }
 
+body {
+  background-color: var(--color-background) !important;
+}
 
 * {
   font-family: "Lora", serif, sans-serif;
@@ -25,7 +28,19 @@
 }
 
 .Pair p:nth-child(1) {
+  align-self: flex-start;
   margin-right: .3rem;
   font-size: 1.1rem;
   font-weight: 600;
+}
+
+p {
+  text-wrap: balance;
+}
+
+h5.error {
+  color: var(--color-error);
+  height: 100%;
+  align-content: center;
+  text-align: center;
 }

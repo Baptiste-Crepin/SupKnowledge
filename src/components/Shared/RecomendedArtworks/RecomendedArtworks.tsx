@@ -4,12 +4,20 @@ import config from "../../../../config.json";
 import { TagType } from "../TagList/TagList";
 import Artwork from "../../Artwork/Artwork";
 import { toast } from "react-toastify";
+import { Button } from "react-bootstrap";
 
-export function RecomendedArtworks({ tags }: { tags: TagType[] }) {
-  const [recomendedArtworkIds, setRecomendedArtworkIds] = useState<number[]>(
+export function RecommendedArtworks({
+  currentId,
+  tags,
+}: {
+  currentId: number;
+  tags: TagType[];
+}) {
+  const [recommendedArtworkIds, setRecommendedArtworkIds] = useState<number[]>(
     []
   );
-  const [recomendedAmount, setRecomendedAmount] = useState<number>(3);
+  const [displayedArtworkIds, setDisplayedArtworkIds] = useState<number[]>([]);
+  const [recommendedAmount, setRecommendedAmount] = useState<number>(3);
 
   useEffect(() => {
     axios
@@ -17,7 +25,9 @@ export function RecomendedArtworks({ tags }: { tags: TagType[] }) {
         `${config.API_URL}/public/collection/v1/search?q=""&tags=${tags[0].term}`
       )
       .then((response) => {
-        setRecomendedArtworkIds(response.data.objectIDs);
+        setRecommendedArtworkIds(
+          response.data.objectIDs.filter((id: number) => id !== currentId)
+        );
       })
       .catch(() => {
         toast.error("Error while fetching recommended artworks", {
@@ -26,29 +36,35 @@ export function RecomendedArtworks({ tags }: { tags: TagType[] }) {
       });
   }, [tags]);
 
+  useEffect(() => {
+    if (recommendedArtworkIds && recommendedArtworkIds.length > 0) {
+      setDisplayedArtworkIds(recommendedArtworkIds.slice(0, recommendedAmount));
+    }
+  }, [recommendedArtworkIds, recommendedAmount]);
+
   return (
-    <div className="recomended-artworks">
-      <h3>Recommended Artworks</h3>
-      {!recomendedArtworkIds || recomendedArtworkIds.length <= 0 ? (
-        <div className="recomended-artworks__artworks">
-          <p>No recommended artworks found</p>
-        </div>
-      ) : (
-        <div className="card-list">
-          {recomendedArtworkIds.splice(0, recomendedAmount).map((id) => (
-            <Artwork key={id} id={id} />
-          ))}
+    <>
+      {!displayedArtworkIds || displayedArtworkIds.length === 0 ? null : (
+        <div className="recommended-artworks">
+          <h3>Recommended Artworks</h3>
+          <div className="card-list">
+            {displayedArtworkIds.map((id) => (
+              <Artwork key={id} id={id} />
+            ))}
+            <p></p>
+
+            {displayedArtworkIds.length ===
+            recommendedArtworkIds.length ? null : (
+              <Button
+                onClick={() => setRecommendedAmount(recommendedAmount + 3)}>
+                Load more
+              </Button>
+            )}
+          </div>
         </div>
       )}
-
-      <button
-        onClick={() => {
-          setRecomendedAmount(recomendedAmount + 3);
-        }}>
-        Load more
-      </button>
-    </div>
+    </>
   );
 }
 
-export default RecomendedArtworks;
+export default RecommendedArtworks;

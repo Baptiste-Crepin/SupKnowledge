@@ -29,7 +29,6 @@ function SearchResultArtwork({ id, handleImagelessArtwork }: ArtworkProps) {
           handleImagelessArtwork !== undefined &&
           response.data.primaryImage === ""
         ) {
-          console.log(response.data);
           handleImagelessArtwork(response.data as ArtworkType);
         }
       })
@@ -40,7 +39,7 @@ function SearchResultArtwork({ id, handleImagelessArtwork }: ArtworkProps) {
           });
           setTimeout(() => {
             fetchArtwork(id, false);
-          }, 10000);
+          }, 5000);
         } else {
           setErrorMessage("Could not load the artwork.");
         }
@@ -54,7 +53,7 @@ function SearchResultArtwork({ id, handleImagelessArtwork }: ArtworkProps) {
   return (
     <>
       <Card
-        className="SearchResultArtwork"
+        className="search-result-artwork"
         onClick={() => {
           navigate(`/artwork/${id}`);
         }}>
@@ -70,14 +69,14 @@ function SearchResultArtwork({ id, handleImagelessArtwork }: ArtworkProps) {
           <>
             {artwork.primaryImageSmall || artwork.primaryImage ? (
               <Card.Img
-                className="Artwork-image"
+                className="artwork-image"
                 variant="top"
                 loading="lazy"
                 src={artwork.primaryImageSmall || artwork.primaryImage}
               />
             ) : (
               <Card.Img
-                className="Artwork-image"
+                className="artwork-image"
                 variant="top"
                 as={MdImageNotSupported}
               />
