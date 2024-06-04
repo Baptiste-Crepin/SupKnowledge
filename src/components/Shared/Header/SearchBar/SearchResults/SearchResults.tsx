@@ -6,26 +6,73 @@ import "./SearchResults.css";
 import SearchResultArtwork from "./SearchResultArtwork/SearchResultArtwork";
 import { Button } from "react-bootstrap";
 
+export type searchParams = {
+  isHighlight?: boolean;
+  title?: boolean;
+  tags?: boolean;
+  departmentId?: number;
+  isOnView?: boolean;
+  artistOrCulture?: boolean;
+  medium?: string;
+  hasImages?: boolean;
+  geoLocation?: string;
+  dateBegin?: number;
+  dateEnd?: number;
+  q: string;
+};
+
 type SearchResultsProps = {
-  querry: string;
+  searchParams: searchParams;
+  isAdvancedSearch?: boolean;
   datasPerSearch?: number;
 };
 
-function SearchResults({ querry, datasPerSearch = 6 }: SearchResultsProps) {
+function SearchResults({
+  searchParams,
+  isAdvancedSearch = false,
+  datasPerSearch = 6,
+}: SearchResultsProps) {
   const [artworkIds, setArtworkIds] = useState<number[]>([]);
   const [total, setTotal] = useState(0);
   const [displayedArtworkAmount, setDisplayedArtworksAmount] =
     useState<number>(datasPerSearch);
 
   useEffect(() => {
-    if (!querry) return;
-    if (querry.length < 3) {
+    if (!searchParams.q) return;
+    if (searchParams.q.length < 3) {
       setArtworkIds([]);
       return;
     }
     setDisplayedArtworksAmount(datasPerSearch);
+
+    let searchParamsQuery: searchParams;
+    //Todo: add all search params back
+    //those are commented out because the backend does not support them properly
+    if (isAdvancedSearch) {
+      searchParamsQuery = {
+        q: searchParams.q,
+        isHighlight: searchParams.isHighlight || false,
+        // title: searchParams.title || false,
+        tags: searchParams.tags || false,
+        departmentId: searchParams.departmentId || 0,
+        isOnView: searchParams.isOnView || false,
+        // artistOrCulture: searchParams.artistOrCulture || false,
+        // medium: searchParams.medium || "",
+        hasImages: searchParams.hasImages || false,
+        geoLocation: searchParams.geoLocation || "",
+        dateBegin: searchParams.dateBegin || 0,
+        dateEnd: searchParams.dateEnd || 0,
+      };
+    } else {
+      searchParamsQuery = {
+        q: searchParams.q,
+      };
+    }
+
     axios
-      .get(`${config.API_URL}/public/collection/v1/search?q=${querry}`)
+      .get(`${config.API_URL}/public/collection/v1/search`, {
+        params: searchParamsQuery,
+      })
       .then((response) => {
         if (response.data.objectIDs === null) {
           setArtworkIds([]);
@@ -41,16 +88,20 @@ function SearchResults({ querry, datasPerSearch = 6 }: SearchResultsProps) {
         });
         setArtworkIds([]);
       });
-  }, [querry]);
+  }, [searchParams, isAdvancedSearch]);
+
+  useEffect(() => {
+    console.log(searchParams);
+  }, [searchParams]);
 
   return (
     <>
       {artworkIds.length <= 0 ? (
-        querry && <p>{querry}: No Artworks found</p>
+        searchParams.q && <p>{searchParams.q}: No Artworks found</p>
       ) : (
         <>
           <p>
-            {querry}: {total} Artworks
+            {searchParams.q}: {total} Artworks
           </p>
           <div className="search-results">
             {artworkIds.slice(0, displayedArtworkAmount).map((id) => (

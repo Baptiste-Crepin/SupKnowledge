@@ -24,16 +24,6 @@ function ArtistInformationComponent({ artwork }: { artwork: ArtworkType }) {
             {displayUnknown("Biography", artwork.artistDisplayBio)}
             {displayUnknown("Nationality", artwork.artistNationality)}
             {displayUnknown("Gender", artwork.artistGender, true)}
-
-            <div className="Pair">
-              <p>Links:</p>
-              <Button variant="primary" href={artwork.artistWikidata_URL}>
-                Wikidata
-              </Button>
-              <Button variant="primary " href={artwork.artistULAN_URL}>
-                Ulan
-              </Button>
-            </div>
           </>
         ) : (
           <p>Unknown artist</p>
