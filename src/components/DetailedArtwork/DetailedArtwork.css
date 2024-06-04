@@ -29,3 +29,7 @@
 .btn {
   margin: .5rem 0;
 }
+
+.main-informations.row {
+  justify-content: space-around;
+}

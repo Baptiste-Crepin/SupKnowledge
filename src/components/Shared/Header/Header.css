@@ -1,11 +1,7 @@
 .Header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 1rem 2rem;
   box-shadow: 0px 0px 15px rgba(102, 102, 102, 1);
   position: fixed;
-  width: 100%;
   background-color: #ffffff;
   z-index: 100;
 }
@@ -20,20 +16,26 @@ a {
   color: var(--color-text) !important;
 }
 
-h1 {
-  margin: 0 !important;
-  color: var(--color-text) !important;
+.search {
+  display: flex;
+  justify-content: end;
 }
 
-span .icon-text {
+/* h1 {
+  margin: 0 !important;
+  color: var(--color-text) !important;
+} */
+
+/* span.icon-text {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.2rem;
-}
+  text-wrap: nowrap;
+} */
 
-.Spacer {
+/* .Spacer {
   display: flex;
   flex-grow: 1;
   height: 0;
-}
+} */

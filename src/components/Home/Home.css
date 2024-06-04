@@ -34,3 +34,16 @@
   margin: 0;
   font-size: 5rem;
 }
+
+
+@media (max-width: 768px) {
+  .Image-cover-content h2 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .Image-cover-content h2 {
+    font-size: 1.5rem;
+  }
+}

@@ -1,12 +1,13 @@
 import axios from "axios";
-import config from "../../../config.json";
 import { useEffect, useRef, useState } from "react";
+import { Col, Container, Row } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import config from "../../../config.json";
 import Artwork from "../Artwork/Artwork";
 import LoaderComponent from "../Shared/Loader/Loader";
-import { toast } from "react-toastify";
-import "./HighlightedList.css";
 import PaginationComponent from "../Shared/PaginationComponent/PaginationComponent";
-import { useNavigate } from "react-router-dom";
+import "./HighlightedList.css";
 
 function HighlightedList() {
   const navigate = useNavigate();
@@ -66,16 +67,22 @@ function HighlightedList() {
         <LoaderComponent />
       ) : (
         <>
-          <div className="card-list">
-            {artworkIds
-              .slice(
-                page * artworksPerPages - artworksPerPages,
-                page * artworksPerPages
-              )
-              .map((id: number) => {
-                return <Artwork key={id} id={id} />;
-              })}
-          </div>
+          <Container>
+            <Row>
+              {artworkIds
+                .slice(
+                  page * artworksPerPages - artworksPerPages,
+                  page * artworksPerPages
+                )
+                .map((id: number) => {
+                  return (
+                    <Col xs={12} sm={6} md={6} lg={4} key={id}>
+                      <Artwork id={id} />
+                    </Col>
+                  );
+                })}
+            </Row>
+          </Container>
           <PaginationComponent
             page={page}
             setPage={setPageAndNavigate}

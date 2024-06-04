@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 import config from "../../../../../../config.json";
-import "./SearchResults.css";
 import SearchResultArtwork from "./SearchResultArtwork/SearchResultArtwork";
-import { Button } from "react-bootstrap";
+import "./SearchResults.css";
 
 export type searchParams = {
   isHighlight?: boolean;
@@ -51,17 +51,17 @@ function SearchResults({
     if (isAdvancedSearch) {
       searchParamsQuery = {
         q: searchParams.q,
-        isHighlight: searchParams.isHighlight || false,
-        // title: searchParams.title || false,
-        tags: searchParams.tags || false,
-        departmentId: searchParams.departmentId || 0,
-        isOnView: searchParams.isOnView || false,
-        // artistOrCulture: searchParams.artistOrCulture || false,
-        // medium: searchParams.medium || "",
-        hasImages: searchParams.hasImages || false,
-        geoLocation: searchParams.geoLocation || "",
-        dateBegin: searchParams.dateBegin || 0,
-        dateEnd: searchParams.dateEnd || 0,
+        // isHighlight: searchParams.isHighlight || false,
+        // // title: searchParams.title || false,
+        // tags: searchParams.tags || false,
+        // departmentId: searchParams.departmentId || 0,
+        // isOnView: searchParams.isOnView || false,
+        // // artistOrCulture: searchParams.artistOrCulture || false,
+        // // medium: searchParams.medium || "",
+        // hasImages: searchParams.hasImages || false,
+        // geoLocation: searchParams.geoLocation || "",
+        // dateBegin: searchParams.dateBegin || 0,
+        // dateEnd: searchParams.dateEnd || 0,
       };
     } else {
       searchParamsQuery = {

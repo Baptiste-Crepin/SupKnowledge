@@ -1,6 +1,6 @@
-import { capitalize } from "./Capitalise";
-import { ImCross } from "react-icons/im";
 import { FaCheck } from "react-icons/fa";
+import { ImCross } from "react-icons/im";
+import { capitalize } from "./Capitalise";
 import { formatTimestamp } from "./FormatTimestamp";
 // import "./DisplayUnknown.css";
 
@@ -66,9 +66,10 @@ export function displayUnknownDates(
         placeholder ? (
         <span className="Pair">
           <p>Dates:</p>
-          {displayUnknownProperty(beginDate.toString(), placeholder)}
-          <p> - </p>
-          {displayUnknownProperty(endDate.toString(), placeholder)}
+          <p>
+            {displayUnknownProperty(beginDate.toString(), placeholder)}-
+            {displayUnknownProperty(endDate.toString(), placeholder)}
+          </p>
         </span>
       ) : null}
     </>

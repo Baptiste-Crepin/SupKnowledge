@@ -1,15 +1,15 @@
 import axios from "axios";
-import config from "../../../config.json";
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import "./Artwork.css";
-import { toast } from "react-toastify";
-import { MdImageNotSupported } from "react-icons/md";
 import Card from "react-bootstrap/Card";
-import LoaderComponent from "../Shared/Loader/Loader";
-import TagsList, { TagType } from "../Shared/TagList/TagList";
-import { MeasurementType } from "../Shared/MeasurementList/MesurementList";
+import { MdImageNotSupported } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import config from "../../../config.json";
 import { ConstituentType } from "../Shared/ConstituentList/ConstituentList";
+import LoaderComponent from "../Shared/Loader/Loader";
+import { MeasurementType } from "../Shared/MeasurementList/MesurementList";
+import TagsList, { TagType } from "../Shared/TagList/TagList";
+import "./Artwork.css";
 
 export type ArtworkType = {
   objectID: number;
@@ -115,7 +115,7 @@ function Artwork({ id, size, handleImagelessArtwork }: ArtworkProps) {
   return (
     <>
       <Card
-        className={`Artwork-${size}`}
+        className={`Artwork`}
         onClick={() => {
           navigate(`/artwork/${id}`);
         }}>

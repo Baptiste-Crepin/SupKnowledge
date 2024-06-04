@@ -1,13 +1,16 @@
-import { Image } from "react-bootstrap";
-import { MdImageNotSupported } from "react-icons/md";
+import { useEffect, useState } from "react";
+import { Button, Col, Container, Image, Row } from "react-bootstrap";
+import {
+  MdChevronLeft,
+  MdChevronRight,
+  MdImageNotSupported,
+} from "react-icons/md";
 import { ArtworkType } from "../../Artwork/Artwork";
 import "./ImageCarousel.css";
-import { useEffect, useState } from "react";
 
 function ImageCarousel({ artwork }: { artwork: ArtworkType }) {
   const [imageList, setImageList] = useState<string[]>([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const timeBeforeSwap = 5000;
 
   useEffect(() => {
     if (
@@ -21,57 +24,55 @@ function ImageCarousel({ artwork }: { artwork: ArtworkType }) {
     }
   }, [artwork]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSelectedImageIndex(
-        selectedImageIndex === imageList.length - 1 ? 0 : selectedImageIndex + 1
-      );
-    }, timeBeforeSwap);
-    return () => clearInterval(interval);
-  }, [selectedImageIndex, imageList]);
+  const handleNext = () => {
+    setSelectedImageIndex((prevIndex) =>
+      prevIndex === imageList.length - 1 ? 0 : prevIndex + 1
+    );
+  };
 
-  useEffect(() => {
-    // add border to the selected image
-    const additionalImages = document.querySelectorAll(".additional-image");
-    additionalImages.forEach((image, index) => {
-      if (index === selectedImageIndex) {
-        image.classList.add("selected");
-      } else {
-        image.classList.remove("selected");
-      }
-    });
-  }, [selectedImageIndex]);
+  const handlePrevious = () => {
+    setSelectedImageIndex((prevIndex) =>
+      prevIndex === 0 ? imageList.length - 1 : prevIndex - 1
+    );
+  };
 
   return (
-    <>
-      {imageList.length === 0 ? null : (
-        <div className="image-carousel">
-          {imageList.length >= 1 ? (
-            <Image
-              className="primary-image"
-              src={imageList[selectedImageIndex]}
-              alt={artwork.title}
-              loading="lazy"
-            />
-          ) : (
-            <MdImageNotSupported />
-          )}
-          {imageList.length <= 1 ? null : (
-            <div className="additional-images">
-              {imageList.map((additionalImage, index) => (
-                <Image
-                  key={additionalImage}
-                  className="additional-image"
-                  src={additionalImage}
-                  alt="Artwork additional"
-                  onClick={() => setSelectedImageIndex(index)}
-                />
-              ))}
-            </div>
-          )}
-        </div>
+    <div className="image-carousel">
+      {imageList.length === 0 ||
+      (!artwork.primaryImage && !artwork.primaryImageSmall) ? (
+        <MdImageNotSupported />
+      ) : (
+        <Container>
+          <Row>
+            <Col xs={12} md={1} lg={2} className="button-container left">
+              <Button
+                variant="secondary"
+                onClick={handlePrevious}
+                className="carousel-control left">
+                <MdChevronLeft />
+              </Button>
+            </Col>
+            <Col xs={12} md={10} lg={8}>
+              <Image
+                className="primary-image"
+                src={imageList[selectedImageIndex]}
+                alt={artwork.title}
+                loading="lazy"
+                onClick={handleNext}
+              />
+            </Col>
+            <Col xs={12} md={1} lg={2} className="button-container right">
+              <Button
+                variant="secondary"
+                onClick={handleNext}
+                className="carousel-control right">
+                <MdChevronRight />
+              </Button>
+            </Col>
+          </Row>
+        </Container>
       )}
-    </>
+    </div>
   );
 }
 
