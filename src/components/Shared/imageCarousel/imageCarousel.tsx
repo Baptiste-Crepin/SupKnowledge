@@ -38,21 +38,23 @@ function ImageCarousel({ artwork }: { artwork: ArtworkType }) {
 
   return (
     <div className="image-carousel">
-      {imageList.length === 0 ||
+      {imageList.length < 1 ||
       (!artwork.primaryImage && !artwork.primaryImageSmall) ? (
         <MdImageNotSupported />
       ) : (
         <Container>
           <Row>
-            <Col xs={12} md={1} lg={2} className="button-container left">
-              <Button
-                variant="secondary"
-                onClick={handlePrevious}
-                className="carousel-control left">
-                <MdChevronLeft />
-              </Button>
-            </Col>
-            <Col xs={12} md={10} lg={8}>
+            {imageList.length > 1 && (
+              <Col xs={12} md={1} lg={2} className="button-container left">
+                <Button
+                  variant="secondary"
+                  onClick={handlePrevious}
+                  className="carousel-control left">
+                  <MdChevronLeft />
+                </Button>
+              </Col>
+            )}
+            <Col xs={12} md={10} lg={8} className="primary-image-container">
               <Image
                 className="primary-image"
                 src={imageList[selectedImageIndex]}
@@ -61,14 +63,16 @@ function ImageCarousel({ artwork }: { artwork: ArtworkType }) {
                 onClick={handleNext}
               />
             </Col>
-            <Col xs={12} md={1} lg={2} className="button-container right">
-              <Button
-                variant="secondary"
-                onClick={handleNext}
-                className="carousel-control right">
-                <MdChevronRight />
-              </Button>
-            </Col>
+            {imageList.length > 1 && (
+              <Col xs={12} md={1} lg={2} className="button-container right">
+                <Button
+                  variant="secondary"
+                  onClick={handleNext}
+                  className="carousel-control right">
+                  <MdChevronRight />
+                </Button>
+              </Col>
+            )}
           </Row>
         </Container>
       )}

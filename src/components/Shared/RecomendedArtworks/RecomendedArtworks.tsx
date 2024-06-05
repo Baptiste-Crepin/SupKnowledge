@@ -30,7 +30,7 @@ export function RecommendedArtworks({
         );
       })
       .catch(() => {
-        toast.error("Error while fetching recommended artworks", {
+        toast.error("Error fetching recommended artworks", {
           toastId: "ErrorFetchingRecommendedArtworks",
         });
       });

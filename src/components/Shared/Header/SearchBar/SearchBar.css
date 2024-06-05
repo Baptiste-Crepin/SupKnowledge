@@ -5,6 +5,7 @@
   z-index: 100;
   width: 100%;
   padding: 2rem 1rem;
+  max-height: 75vh;
 }
 
 .advanced-search {
@@ -13,4 +14,10 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+
+.search-bar-result.row {
+  /* height: 50vh; */
+  /* overflow: scroll; */
 }

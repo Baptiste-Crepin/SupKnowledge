@@ -96,12 +96,12 @@ function Artwork({ id, size, handleImagelessArtwork }: ArtworkProps) {
       })
       .catch(() => {
         if (firstIteration) {
-          toast.error("Error while fetching highlighted artworks", {
+          toast.error("Error fetching highlighted artworks", {
             toastId: "ErrorFetchingArtwork",
           });
           setTimeout(() => {
             fetchArtwork(id, false);
-          }, 5000);
+          }, 2000);
         } else {
           setErrorMessage("Could not load the artwork.");
         }

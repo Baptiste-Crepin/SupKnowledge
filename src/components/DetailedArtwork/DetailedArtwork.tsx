@@ -30,7 +30,7 @@ function DetailedArtwork() {
         setArtwork(response.data as ArtworkType);
       })
       .catch(() => {
-        toast.error("Error while fetching artwork", {
+        toast.error("Error fetching artwork", {
           toastId: "ErrorFetchingArtwork",
         });
         navigate("/");

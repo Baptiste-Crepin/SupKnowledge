@@ -9,7 +9,7 @@ export type Department = {
 };
 
 type DepartmentSelectProps = {
-  onSelect: (departmentId: number) => void;
+  onSelect: (departmentId?: number) => void;
 };
 
 function DepartmentSelect({ onSelect }: DepartmentSelectProps) {
@@ -25,21 +25,22 @@ function DepartmentSelect({ onSelect }: DepartmentSelectProps) {
           setFetched(true);
         })
         .catch(() => {
-          console.error("Error while fetching departments");
+          console.error("Error fetching departments");
         });
     }
   }, [fetched]);
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedDepartmentId = parseInt(event.target.value, 10);
+    const selectedDepartmentId = parseInt(event.target.value, 10) || undefined;
     onSelect(selectedDepartmentId);
   };
 
   return (
     <Form.Select
       aria-label="Default select example"
-      onChange={handleSelectChange}>
-      <option>Select a department</option>
+      onChange={handleSelectChange}
+      defaultValue={undefined}>
+      <option value={undefined}>Select a department</option>
       {departments.map((department) => (
         <option key={department.departmentId} value={department.departmentId}>
           {department.displayName}

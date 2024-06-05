@@ -16,20 +16,18 @@ export type searchParams = {
   medium?: string;
   hasImages?: boolean;
   geoLocation?: string;
-  dateBegin?: Date | string;
-  dateEnd?: Date | string;
+  dateBegin?: number;
+  dateEnd?: number;
   q: string;
 };
 
 type SearchResultsProps = {
   searchParams: searchParams;
-  isAdvancedSearch?: boolean;
   datasPerSearch?: number;
 };
 
 function SearchResults({
   searchParams,
-  isAdvancedSearch = false,
   datasPerSearch = 6,
 }: SearchResultsProps) {
   const [artworkIds, setArtworkIds] = useState<number[]>([]);
@@ -38,35 +36,28 @@ function SearchResults({
     useState<number>(datasPerSearch);
 
   useEffect(() => {
-    if (!searchParams.q) return;
-    if (searchParams.q.length < 3) {
+    setDisplayedArtworksAmount(datasPerSearch);
+
+    if (!searchParams.q || searchParams.q.length === 0) {
       setArtworkIds([]);
       return;
     }
-    setDisplayedArtworksAmount(datasPerSearch);
 
     let searchParamsQuery: searchParams;
-    if (isAdvancedSearch) {
-      searchParamsQuery = {
-        q: searchParams.q,
-        isHighlight: searchParams.isHighlight,
-        title: searchParams.title,
-        tags: searchParams.tags,
-        departmentId: searchParams.departmentId,
-        isOnView: searchParams.isOnView,
-        artistOrCulture: searchParams.artistOrCulture,
-        medium: searchParams.medium,
-        hasImages: searchParams.hasImages,
-        geoLocation: searchParams.geoLocation,
-        dateBegin:
-          searchParams.dateBegin === "" ? undefined : searchParams.dateBegin,
-        dateEnd: searchParams.dateEnd === "" ? undefined : searchParams.dateEnd,
-      };
-    } else {
-      searchParamsQuery = {
-        q: searchParams.q,
-      };
-    }
+    searchParamsQuery = {
+      isHighlight: searchParams.isHighlight,
+      title: searchParams.title,
+      tags: searchParams.tags,
+      departmentId: searchParams.departmentId,
+      isOnView: searchParams.isOnView,
+      artistOrCulture: searchParams.artistOrCulture,
+      medium: searchParams.medium,
+      hasImages: searchParams.hasImages,
+      geoLocation: searchParams.geoLocation,
+      dateBegin: searchParams.dateBegin,
+      dateEnd: searchParams.dateEnd,
+      q: searchParams.q,
+    };
 
     axios
       .get(`${config.API_URL}/public/collection/v1/search`, {
@@ -82,12 +73,12 @@ function SearchResults({
         setArtworkIds(response.data.objectIDs);
       })
       .catch(() => {
-        toast.error("Error while fetching search results", {
+        toast.error("Error fetching search results", {
           toastId: "ErrorFetchingSearchResults",
         });
         setArtworkIds([]);
       });
-  }, [searchParams, isAdvancedSearch]);
+  }, [searchParams]);
 
   return (
     <>
@@ -95,7 +86,7 @@ function SearchResults({
         searchParams.q && <p>{searchParams.q}: No Artworks found</p>
       ) : (
         <>
-          <Container>
+          <Container className="bla">
             <Row>
               <p>
                 {searchParams.q}: {total} Artworks
@@ -110,13 +101,16 @@ function SearchResults({
                 );
               })}
             </Row>
-            <Row>
+            <Row className="button-container">
               {displayedArtworkAmount >= total ? null : (
                 <>
                   <Button
                     onClick={() =>
-                      setDisplayedArtworksAmount(displayedArtworkAmount + 6)
-                    }>
+                      setDisplayedArtworksAmount(
+                        displayedArtworkAmount + datasPerSearch
+                      )
+                    }
+                    className="see-more">
                     See more {displayedArtworkAmount} / {total}
                   </Button>
                 </>

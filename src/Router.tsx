@@ -1,7 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import AdvancedSearch from "./Components/Advanced-search/AdvancedSearch";
 import DetailedArtwork from "./Components/DetailedArtwork/DetailedArtwork";
 import HomeComponent from "./Components/Home/Home";
-import { ToastContainer } from "react-toastify";
 import HeaderComponent from "./Components/Shared/Header/Header";
 
 function RouterComponent() {
@@ -12,6 +13,7 @@ function RouterComponent() {
       <Routes>
         <Route path="/" element={<HomeComponent />} />
         <Route path="/artwork/:id" element={<DetailedArtwork />} />
+        <Route path="/advanced-search" element={<AdvancedSearch />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
     </BrowserRouter>

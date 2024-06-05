@@ -51,6 +51,12 @@
   margin: 0;
 }
 
+.primary-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .left {
   margin-right: 0;
   padding-right: 0;

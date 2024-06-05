@@ -50,7 +50,7 @@ function HighlightedList() {
         setTotal(response.data.total);
       })
       .catch(() => {
-        toast.error("Error while fetching highlighted", {
+        toast.error("Error fetching highlighted", {
           toastId: "ErrorFetchingHighlighted",
         });
       });
