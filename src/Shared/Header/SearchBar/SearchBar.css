@@ -1,0 +1,37 @@
+.search-bar {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  position: fixed;
+  z-index: 100;
+  width: 100%;
+  padding: 2rem 1rem;
+  max-height: 75vh;
+  box-shadow: 0px 15px 15px -15px rgba(102, 102, 102, 1);
+}
+
+.search-bar .button-container {
+  text-align: right;
+}
+
+.advanced-search {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+.d-flex {
+  display: flex;
+  align-items: center;
+}
+
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+.search-input {
+  width: 100%;
+}

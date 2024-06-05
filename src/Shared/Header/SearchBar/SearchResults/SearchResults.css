@@ -1,0 +1,38 @@
+.search-results {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  overflow: auto;
+}
+
+.search-bar-result {
+  height: 100%;
+  overflow: scroll;
+}
+
+.search-result-artwork.card {
+  height: 100%;
+}
+
+.artwork-results.container {
+  height: 100%;
+  overflow: hidden;
+}
+
+.search-result.row {
+  max-height: 45vh;
+  overflow: scroll;
+}
+
+button.see-more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  width: 33%;
+}
+
+.artwork-results .button-container {
+  justify-content: center;
+}

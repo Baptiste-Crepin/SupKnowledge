@@ -1,0 +1,81 @@
+.image-carousel {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.additional-images {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.additional-image {
+  height: 10vh;
+  object-fit: contain;
+  place-self: center;
+}
+
+.selected {
+  border: 3px solid var(--color-black);
+}
+
+.primary-image {
+  width: 100%;
+  object-fit: contain;
+  place-self: center;
+  aspect-ratio: 1;
+}
+
+.carousel-control svg {
+  height: 50%;
+  fill: #FFF;
+}
+
+.image-carousel .button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 0;
+}
+
+.primary-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.left {
+  margin-right: 0;
+  padding-right: 0;
+}
+
+.button-container.left.col {
+  justify-content: end;
+}
+
+.button-container.right.col {
+  justify-content: start;
+}
+
+.progress {
+  padding: 0 !important;
+  margin-top: 1rem !important;
+}
+
+button.carousel-control {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+@media (max-width: 767px) {
+  button.carousel-control svg {
+    transform: rotate(90deg);
+  }
+}

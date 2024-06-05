@@ -2,7 +2,6 @@ import { FaCheck } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 import { capitalize } from "./Capitalise";
 import { formatTimestamp } from "./FormatTimestamp";
-// import "./DisplayUnknown.css";
 
 export function displayUnknownProperty(
   value: string,

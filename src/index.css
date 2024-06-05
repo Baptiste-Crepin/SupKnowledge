@@ -1,14 +1,11 @@
 :root {
-  --color-primary: #BF8763;
+  --color-primary: #434343;
   --color-secondary: #646cff;
-  --color-background: #F0E2DA;
+  --color-background: #bf87641a;
   --color-tertiary: #1a1a1a;
   --color-text: #242424;
   --color-white: #ffffff;
   --color-black: #000000;
-  --color-error: #ff0000;
-  --color-success: #00ff00;
-  --color-warning: #ffff00;
 }
 
 body {
@@ -19,7 +16,6 @@ body {
   font-family: "Lora", serif, sans-serif;
   box-sizing: border-box;
 }
-
 
 .Pair {
   display: flex;
