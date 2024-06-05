@@ -115,6 +115,14 @@ function AdvancedSearch() {
                 checked={searchParams.hasImages}
                 onChange={handleInputChange}
               />
+              <Form.Check
+                type="checkbox"
+                id="tags"
+                name="tags"
+                label="tags"
+                checked={searchParams.tags}
+                onChange={handleInputChange}
+              />
               <DepartmentSelect onSelect={handleSelectChange} />
               <Form.Group controlId="dateBegin">
                 <Form.Label>Begin date:</Form.Label>
