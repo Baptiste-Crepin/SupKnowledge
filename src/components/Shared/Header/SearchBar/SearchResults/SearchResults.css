@@ -5,3 +5,12 @@
   overflow: auto;
   max-height: 45vh;
 }
+
+.search-bar-result {
+  height: 45vh;
+  overflow: scroll;
+}
+
+.search-result-artwork.card {
+  height: 100%;
+}

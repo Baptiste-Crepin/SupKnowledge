@@ -1,14 +1,14 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import "./SearchResultArtwork.css";
-import { toast } from "react-toastify";
-import { MdImageNotSupported } from "react-icons/md";
 import { Card } from "react-bootstrap";
-import LoaderComponent from "../../../../Loader/Loader";
+import { MdImageNotSupported } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import config from "../../../../../../../config.json";
 import { ArtworkType } from "../../../../../Artwork/Artwork";
+import LoaderComponent from "../../../../Loader/Loader";
 import TagsList from "../../../../TagList/TagList";
+import "./SearchResultArtwork.css";
 
 type ArtworkProps = {
   id: number;
@@ -51,53 +51,49 @@ function SearchResultArtwork({ id, handleImagelessArtwork }: ArtworkProps) {
   }, [id]);
 
   return (
-    <>
-      <Card
-        className="search-result-artwork"
-        onClick={() => {
-          navigate(`/artwork/${id}`);
-        }}>
-        {artwork === null ? (
+    <Card
+      className="search-result-artwork"
+      onClick={() => {
+        navigate(`/artwork/${id}`);
+      }}>
+      {artwork === null ? (
+        <Card.Body>
+          {errorMessage ? (
+            <h5 className="error">{errorMessage}</h5>
+          ) : (
+            <LoaderComponent />
+          )}
+        </Card.Body>
+      ) : (
+        <>
+          {artwork.primaryImageSmall || artwork.primaryImage ? (
+            <Card.Img
+              className="artwork-image"
+              variant="top"
+              loading="lazy"
+              src={artwork.primaryImageSmall || artwork.primaryImage}
+            />
+          ) : (
+            <Card.Img
+              className="artwork-image"
+              variant="top"
+              as={MdImageNotSupported}
+            />
+          )}
           <Card.Body>
-            {errorMessage ? (
-              <h5 className="error">{errorMessage}</h5>
-            ) : (
-              <LoaderComponent />
-            )}
+            <Card.Title>
+              {artwork.title ||
+                `${artwork.objectName} - ${artwork.artistDisplayName}`}
+            </Card.Title>
+            <Card.Text>{artwork.artistDisplayName}</Card.Text>
+            <Card.Text>
+              {artwork.medium} - {artwork.objectDate}
+            </Card.Text>
+            <TagsList tags={artwork.tags} card />
           </Card.Body>
-        ) : (
-          <>
-            {artwork.primaryImageSmall || artwork.primaryImage ? (
-              <Card.Img
-                className="artwork-image"
-                variant="top"
-                loading="lazy"
-                src={artwork.primaryImageSmall || artwork.primaryImage}
-              />
-            ) : (
-              <Card.Img
-                className="artwork-image"
-                variant="top"
-                as={MdImageNotSupported}
-              />
-            )}
-            <Card.Body>
-              <Card.Title>
-                {artwork.title ||
-                  `${artwork.objectName} - ${artwork.artistDisplayName}`}
-              </Card.Title>
-              <Card.Text>{artwork.artistDisplayName}</Card.Text>
-              <Card.Text>
-                {artwork.medium} - {artwork.objectDate}
-              </Card.Text>
-              <Card.Text>
-                <TagsList tags={artwork.tags} card />
-              </Card.Text>
-            </Card.Body>
-          </>
-        )}
-      </Card>
-    </>
+        </>
+      )}
+    </Card>
   );
 }
 

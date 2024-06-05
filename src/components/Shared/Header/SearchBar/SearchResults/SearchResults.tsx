@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
 import config from "../../../../../../config.json";
 import SearchResultArtwork from "./SearchResultArtwork/SearchResultArtwork";
@@ -16,8 +16,8 @@ export type searchParams = {
   medium?: string;
   hasImages?: boolean;
   geoLocation?: string;
-  dateBegin?: number;
-  dateEnd?: number;
+  dateBegin?: Date | string;
+  dateEnd?: Date | string;
   q: string;
 };
 
@@ -46,22 +46,21 @@ function SearchResults({
     setDisplayedArtworksAmount(datasPerSearch);
 
     let searchParamsQuery: searchParams;
-    //Todo: add all search params back
-    //those are commented out because the backend does not support them properly
     if (isAdvancedSearch) {
       searchParamsQuery = {
         q: searchParams.q,
-        // isHighlight: searchParams.isHighlight || false,
-        // // title: searchParams.title || false,
-        // tags: searchParams.tags || false,
-        // departmentId: searchParams.departmentId || 0,
-        // isOnView: searchParams.isOnView || false,
-        // // artistOrCulture: searchParams.artistOrCulture || false,
-        // // medium: searchParams.medium || "",
-        // hasImages: searchParams.hasImages || false,
-        // geoLocation: searchParams.geoLocation || "",
-        // dateBegin: searchParams.dateBegin || 0,
-        // dateEnd: searchParams.dateEnd || 0,
+        isHighlight: searchParams.isHighlight,
+        title: searchParams.title,
+        tags: searchParams.tags,
+        departmentId: searchParams.departmentId,
+        isOnView: searchParams.isOnView,
+        artistOrCulture: searchParams.artistOrCulture,
+        medium: searchParams.medium,
+        hasImages: searchParams.hasImages,
+        geoLocation: searchParams.geoLocation,
+        dateBegin:
+          searchParams.dateBegin === "" ? undefined : searchParams.dateBegin,
+        dateEnd: searchParams.dateEnd === "" ? undefined : searchParams.dateEnd,
       };
     } else {
       searchParamsQuery = {
@@ -90,35 +89,40 @@ function SearchResults({
       });
   }, [searchParams, isAdvancedSearch]);
 
-  useEffect(() => {
-    console.log(searchParams);
-  }, [searchParams]);
-
   return (
     <>
       {artworkIds.length <= 0 ? (
         searchParams.q && <p>{searchParams.q}: No Artworks found</p>
       ) : (
         <>
-          <p>
-            {searchParams.q}: {total} Artworks
-          </p>
-          <div className="search-results">
-            {artworkIds.slice(0, displayedArtworkAmount).map((id) => (
-              <SearchResultArtwork key={id} id={id} />
-            ))}
-            {displayedArtworkAmount >= total ? null : (
-              <>
-                <p></p>
-                <Button
-                  onClick={() =>
-                    setDisplayedArtworksAmount(displayedArtworkAmount + 6)
-                  }>
-                  See more {displayedArtworkAmount} / {total}
-                </Button>
-              </>
-            )}
-          </div>
+          <Container>
+            <Row>
+              <p>
+                {searchParams.q}: {total} Artworks
+              </p>
+            </Row>
+            <Row className="search-bar-result">
+              {artworkIds.slice(0, displayedArtworkAmount).map((id: number) => {
+                return (
+                  <Col xs={12} sm={6} md={6} lg={4} key={id}>
+                    <SearchResultArtwork id={id} />
+                  </Col>
+                );
+              })}
+            </Row>
+            <Row>
+              {displayedArtworkAmount >= total ? null : (
+                <>
+                  <Button
+                    onClick={() =>
+                      setDisplayedArtworksAmount(displayedArtworkAmount + 6)
+                    }>
+                    See more {displayedArtworkAmount} / {total}
+                  </Button>
+                </>
+              )}
+            </Row>
+          </Container>
         </>
       )}
     </>

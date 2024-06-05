@@ -25,9 +25,11 @@ function SearchBarComponent({
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("");
   const defaultSearchParams: searchParams = {
     q: "",
-    isHighlight: false,
-    isOnView: false,
-    hasImages: true,
+    isHighlight: undefined,
+    isOnView: undefined,
+    hasImages: undefined,
+    dateBegin: "",
+    dateEnd: "",
   };
   const [searchParams, setSearchParams] =
     useState<searchParams>(defaultSearchParams);
@@ -58,10 +60,9 @@ function SearchBarComponent({
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
-    console.log(name, value, type, checked);
     setSearchParams((prevParams) => ({
       ...prevParams,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: type === "checkbox" ? (checked ? true : undefined) : value,
     }));
   };
 
@@ -94,95 +95,16 @@ function SearchBarComponent({
     };
   }, [searchQuery]);
 
-  // return (
-  //   <>
-  //     {isOpened ? (
-  //       <div className="SearchBar">
-  //         <span className="Pair">
-  //           <label htmlFor="search">Search</label>
-  //           <input
-  //             type="text"
-  //             placeholder="Search"
-  //             name="q"
-  //             value={searchQuery}
-  //             onChange={(e) => setSearchQuery(e.target.value)}
-  //           />
-  //         </span>
-  //         <span className="Pair">
-  //           <label htmlFor="advancedSearch">Advanced Search</label>
-  //           <input
-  //             type="checkbox"
-  //             id="advancedSearch"
-  //             name="advancedSearch"
-  //             checked={isAdvancedSearch}
-  //             onChange={() => setIsAdvancedSearch(!isAdvancedSearch)}
-  //           />
-  //         </span>
-  //         {isAdvancedSearch ? (
-  //           <div className="advanced-search">
-  //             <span className="Pair">
-  //               <label htmlFor="isHighlight">Highlights</label>
-  //               <input
-  //                 type="checkbox"
-  //                 id="isHighlight"
-  //                 name="isHighlight"
-  //                 checked={searchParams.isHighlight || false}
-  //                 onChange={handleInputChange}
-  //               />
-  //             </span>
-  //             {/* <span className="Pair">
-  //               <label htmlFor="title">Title</label>
-  //               <input
-  //                 type="checkbox"
-  //                 id="title"
-  //                 name="title"
-  //                 checked={searchParams.title || false}
-  //                 onChange={handleInputChange}
-  //               />
-  //             </span> */}
-  //             <span className="Pair">
-  //               <label htmlFor="isOnView">On View</label>
-  //               <input
-  //                 type="checkbox"
-  //                 id="isOnView"
-  //                 name="isOnView"
-  //                 checked={searchParams.isOnView || false}
-  //                 onChange={handleInputChange}
-  //               />
-  //             </span>
-  //             {/* <span className="Pair">
-  //               <label htmlFor="artistOrCulture">Artist or Culture</label>
-  //               <input
-  //                 type="checkbox"
-  //                 id="artistOrCulture"
-  //                 name="artistOrCulture"
-  //                 checked={searchParams.artistOrCulture || false}
-  //                 onChange={handleInputChange}
-  //               />
-  //             </span> */}
-  //             <span className="Pair">
-  //               <label htmlFor="hasImages">Has Images</label>
-  //               <input
-  //                 type="checkbox"
-  //                 id="hasImages"
-  //                 name="hasImages"
-  //                 checked={searchParams.hasImages || false}
-  //                 onChange={handleInputChange}
-  //               />
-  //             </span>
-  //             <span className="Pair">
-  //               <DepartmentSelect onSelect={handleSelectChange} />
-  //             </span>
-  //           </div>
-  //         ) : null}
-  //         <SearchResults
-  //           searchParams={searchParams}
-  //           isAdvancedSearch={isAdvancedSearch}
-  //         />
-  //       </div>
-  //     ) : null}
-  //   </>
-  // );
+  useEffect(() => {
+    const tempQuery = searchParams.q;
+    if (!isAdvancedSearch) {
+      setSearchParams(defaultSearchParams);
+      setSearchParams((prevParams) => ({
+        ...prevParams,
+        q: tempQuery,
+      }));
+    }
+  }, [isAdvancedSearch]);
 
   return (
     <Container fluid className="p-3 SearchBar">
@@ -235,6 +157,32 @@ function SearchBarComponent({
                   checked={searchParams.isOnView || false}
                   onChange={handleInputChange}
                 />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Form.Check>
+                  <Form.Label>Begin date:</Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="dateBegin"
+                    value={searchParams.dateBegin as string}
+                    onChange={handleInputChange}
+                    placeholder="Begin date"
+                  />
+                </Form.Check>
+              </Col>
+              <Col>
+                <Form.Check>
+                  <Form.Label>Date end:</Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="dateEnd"
+                    value={searchParams.dateEnd as string}
+                    onChange={handleInputChange}
+                    placeholder="Date end"
+                  />
+                </Form.Check>
               </Col>
             </Row>
             <Row>
