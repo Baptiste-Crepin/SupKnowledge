@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import config from "../../../config.json";
 import {
   displayUnknown,
+  displayUnknownBoolean,
   displayUnknownDates,
 } from "../../Helpers/DisplayUnknown";
 import ArtistInformationComponent from "../../Shared/ArtistInformations/ArtistInformations";
@@ -76,6 +77,31 @@ function DetailedArtwork() {
                       artwork.objectEndDate
                     )
                   : displayUnknown("Object date", artwork.objectDate)}
+                {displayUnknown("Medium", artwork.medium)}
+                {displayUnknown("Culture", artwork.culture)}
+                {displayUnknown("Period", artwork.period)}
+                {displayUnknown("Classification", artwork.classification)}
+                {displayUnknown("Department", artwork.department)}
+                {displayUnknown("Accession Number", artwork.accessionNumber)}
+                {displayUnknown("Credit Line", artwork.creditLine)}
+                {displayUnknown("Country", artwork.country)}
+                {displayUnknown("City", artwork.city)}
+                {displayUnknown("Repository", artwork.repository)}
+                {displayUnknown("Object ID", artwork.objectID)}
+                {displayUnknown("Object URL", artwork.accessionNumber)}
+                {displayUnknown(
+                  "Rights and Reproduction",
+                  artwork.rightsAndReproduction
+                )}
+                {displayUnknownBoolean(
+                  "Is Public Domain",
+                  artwork.isPublicDomain
+                )}
+                {displayUnknownBoolean("Is Highlight", artwork.isHighlight)}
+                {displayUnknownBoolean(
+                  "Is Timeline Work",
+                  artwork.isTimelineWork
+                )}
               </div>
             </Col>
             <Col xs={12} md={4} className="d-flex justify-content-center">
