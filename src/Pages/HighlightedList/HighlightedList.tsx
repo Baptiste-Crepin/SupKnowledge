@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import config from "../../../config.json";
 import Artwork from "../../Shared/Artwork/Artwork";
@@ -9,12 +9,14 @@ import LoaderComponent from "../../Shared/Loader/Loader";
 import PaginationComponent from "../../Shared/PaginationComponent/PaginationComponent";
 import "./HighlightedList.css";
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 function HighlightedList() {
   const navigate = useNavigate();
-  const searchParams = new URLSearchParams(location.search);
-  const [page, setPage] = useState<number>(
-    parseInt(searchParams.get("page") ?? "1")
-  );
+  const query = useQuery();
+  const [page, setPage] = useState<number>(parseInt(query.get("page") ?? "1"));
   const [artworkIds, setArtworkIds] = useState([]);
   const [total, setTotal] = useState(0);
   const artworksPerPages = 9;
@@ -22,8 +24,8 @@ function HighlightedList() {
 
   const setPageAndNavigate = (newPage: number) => {
     setPage(newPage);
-    searchParams.set("page", newPage.toString());
-    navigate({ search: searchParams.toString() });
+    query.set("page", newPage.toString());
+    navigate({ search: query.toString() });
 
     // Scroll to the top of the highlighted section
     const offset = 100;
@@ -57,8 +59,8 @@ function HighlightedList() {
   }, []);
 
   useEffect(() => {
-    setPage(parseInt(searchParams.get("page") || "1"));
-  }, [searchParams]);
+    setPage(parseInt(query.get("page") || "1"));
+  }, [query]);
 
   return (
     <div style={{ padding: "2rem" }}>

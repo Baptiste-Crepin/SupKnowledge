@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, HashRouter as Router, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import AdvancedSearch from "./Pages/Advanced-search/AdvancedSearch";
 import DetailedArtwork from "./Pages/DetailedArtwork/DetailedArtwork";
@@ -7,7 +7,7 @@ import HeaderComponent from "./Shared/Header/Header";
 
 function RouterComponent() {
   return (
-    <BrowserRouter>
+    <Router>
       <HeaderComponent />
       <ToastContainer theme="colored" position="bottom-left" />
       <Routes>
@@ -16,7 +16,7 @@ function RouterComponent() {
         <Route path="/advanced-search" element={<AdvancedSearch />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 
